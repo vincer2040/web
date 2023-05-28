@@ -1,0 +1,21 @@
+{
+    "name": "observable",
+    "version": "1.0.0",
+    "description": "",
+    "main": "dist/main.js",
+    "types": "dist/main.d.ts",
+    "type": "module",
+    "scripts": {
+        "build": "vite build && npx tsc --emitDeclarationOnly",
+        "dev": "vitest",
+        "test": "vitest run"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "devDependencies": {
+        "typescript": "^4.9.5",
+        "vite": "^4.1.4",
+        "vitest": "^0.31.1"
+    }
+}

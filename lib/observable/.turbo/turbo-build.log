@@ -1,0 +1,13 @@
+
+> chart@1.0.0 build /home/vince/apps/web/lib/chart
+> vite build && npx tsc --emitDeclarationOnly
+
+vite v4.3.8 building for production...
+transforming...
+✓ 4 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/main.js  3.75 kB │ gzip: 1.09 kB
+Entry module "lib/main.ts" is using named and default exports together. Consumers of your bundle will have to use `chart.default` to access the default export, which may not be what you want. Use `output.exports: "named"` to disable this warning.
+dist/main.umd.cjs  3.67 kB │ gzip: 1.19 kB
+✓ built in 155ms
