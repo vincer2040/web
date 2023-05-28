@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <link rel="icon" type="image/svg+xml" href="/vite.svg?v2" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <script defer type="module">
+            import { barchart } from "./lib/main";
+
+            let x = [
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+            ];
+            let y = [
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+            ]
+
+            let data = {
+                x,
+                y,
+            }
+
+            let barchartdata = {
+                elementId: "chart",
+                title: "yes",
+                xLabel: "x",
+                yLabel: "y",
+                data,
+            }
+
+            barchart(barchartdata);
+        </script>
+        <title>chart</title>
+    </head>
+    <body>
+        <div id="chart"></div>
+    </body>
+</html>
