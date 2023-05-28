@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <link rel="icon" type="image/svg+xml" href="http://localhost:5190/vite.svg" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="http://localhost:5190/src/index.css">
+        <script type="module" src="http://localhost:5190/src/main.ts"></script>
+        <title>Template</title>
+    </head>
+    <body>
+        <header class="flex gap-x-56 align-items-center bg-neutral-900 h-24 px-10">
+            <h1 class="text-2xl text-neutral-100 h-full grid place-items-center">template</h1>
+            <nav class="h-full grid place-items-center">
+                <ul class="flex gap-10 align-items-center justify-center">
+                    <li>
+                        <a class="text-xl text-neutral-100" href="/">home</a>
+                    </li>
+                    <li>
+                        <a class="text-xl text-neutral-100" href="/about/">about</a>
+                    </li>
+                </ul>
+            </nav>
+        </header>
+        <main class="grid place-items-center">
+            <article class="p-10">
+                <div id="counter"></div>
+            </article>
+        </main>
+        <script type="module" src="http://localhost:5190/src/mount.ts"></script>
+    </body>
+</html>

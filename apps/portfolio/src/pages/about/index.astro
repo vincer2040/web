@@ -1,0 +1,16 @@
+---
+import SiteLayout from "../../layouts/siteLayout.astro";
+import Langs from "../../components/langs.astro";
+import Frameworks from "../../components/frameworks.astro";
+import BuildTools from "../../components/buildTools.astro";
+---
+
+<SiteLayout>
+    <main class="grid w-full place-items-center">
+        <article class="grid place-items-center text-text">
+            <Langs />
+            <Frameworks />
+            <BuildTools />
+        </article>
+    </main>
+</SiteLayout>
