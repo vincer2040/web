@@ -1,0 +1,17 @@
+{
+    "name": "web",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "build": "turbo build",
+        "test": "turbo test",
+        "dev": "turbo dev"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "devDependencies": {
+        "turbo": "^1.9.9"
+    }
+}
