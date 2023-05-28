@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <link rel="icon" type="image/svg+xml" href="/vite.svg?v2" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>router</title>
+        <script defer type="module">
+            import flamethrower from './lib/main.ts';
+            flamethrower({ prefetch: 'visible', log: true, pageTransitions: false });
+        </script>
+        <style>
+body {
+    background: #fbfcf6;
+}
+.nav {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+main {
+    display: grid;
+    place-items: center;
+}
+#load-bar {
+  background-color: blue;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 5px;
+}
+        </style>
+    </head>
+    <body>
+        <div id="load-bar"></div>
+        <main>
+            <h1>home</h1>
+            <div class="nav">
+                <a href="/">home</a>
+                <a href="/about">about</a>
+                <a href="https://www.google.com">out</a>
+            </div>
+        </main>
+        <script>
+            function testProgress({detail}) {
+                const loadBar = document.getElementById('load-bar');
+                console.log('Fetch Progress:', detail);
+                loadBar.style.width = detail.progress + '%';
+                window.removeEventListener("flamethrower:router:fetch-progress", testProgress);
+            }
+            window.addEventListener('flamethrower:router:fetch-progress', testProgress);
+        </script>
+    </body>
+</html>
