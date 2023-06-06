@@ -6,12 +6,12 @@
     "scripts": {
         "build": "turbo build",
         "test": "turbo test",
-        "dev": "turbo dev"
+        "dev": "turbo dev --no-daemon"
     },
     "keywords": [],
     "author": "",
     "license": "ISC",
     "devDependencies": {
-        "turbo": "^1.9.9"
+        "turbo": "^1.10.0"
     }
 }
