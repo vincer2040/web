@@ -43,11 +43,21 @@ created on disk. Currently, the only logging mechanism used by the server is via
 above. In the future, I would like to implement a mechanism that allows these data structures to be written to a file
 in the format that they appear in memory.
 
-### misc.
-
-I have created clients in the following languages: Java, Rust, Typescript/Javascript, C, C++, and Go.
-
 ### impact
 
 This project has almost completely changed the way I program.
 
+### misc.
+
+#### client libraries
+
+There are currently libraries that are a facade for interacting with the database. A client has been implemented for
+the following languages: C, Rust, C++, Typescript/Javascript, Java, Python, and Go. They each follow the same general pattern;
+a structure for building the message to be sent to the server, a structure for parsing the message received from the
+server, and a structure that encapsulates the former structures and the socket that is created to connect to the server.
+
+The structures that build the message to be sent to the server implement the builder pattern, which allows for easy and
+human readable syntax for building binary messages. The structures that parse the messages received from the server follow
+the same general pattern that the database follows when parsing messages it receives. Finally, the base structure that
+is the public interface of the client that encapsulates the protocol builder, parser, and the socket that is used to
+communicate with the server.
