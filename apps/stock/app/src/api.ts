@@ -1,4 +1,4 @@
-import type { Fundamentals, Income } from "./apiTypes";
+import type { Fundamentals, Income, Balance, CashFlow } from "./apiTypes";
 
 export default class Api {
     public static async fundamentals(): Promise<Fundamentals> {
@@ -12,6 +12,20 @@ export default class Api {
         let url = `http://localhost:42069/api/income`;
         let res = await fetch(url);
         let r = await res.json() as Income;
+        return r;
+    }
+
+    public static async balance(): Promise<Balance> {
+        let url = `http://localhost:42069/api/balance`;
+        let res = await fetch(url);
+        let r = await res.json() as Balance;
+        return r;
+    }
+
+    public static async cashflow(): Promise<CashFlow> {
+        let url = `http://localhost:42069/api/cash`;
+        let res = await fetch(url);
+        let r = await res.json() as CashFlow;
         return r;
     }
 }
