@@ -1,4 +1,4 @@
-import type { NumberFormatter, StringFormatter, FundamentalElements, RevenueElements, BalanceElements, CashFlowElements } from "./searchTypes";
+import type { NumberFormatter, StringFormatter, FundamentalElements } from "./searchTypes";
 
 export class CurrencyCompactor implements NumberFormatter {
     private formator: Intl.NumberFormat;
@@ -90,26 +90,3 @@ export function getFundamentalElements(): FundamentalElements {
         exdivdateEl: document.getElementById("exdivdate") as HTMLParagraphElement,
     }
 }
-
-export function getRevenueElements(): RevenueElements {
-    return {
-        totalRevenue: document.getElementById("total-revenue") as HTMLUListElement,
-    }
-}
-
-export function getBalanceElements(): BalanceElements {
-    return {
-        totalAssets: document.getElementById("total-assets") as HTMLUListElement,
-        cash: document.getElementById("cash") as HTMLUListElement,
-        totalLiabilities: document.getElementById("total-liabilities") as HTMLUListElement,
-    }
-}
-
-export function getCashFlowElements(): CashFlowElements {
-    return {
-        netIncome: document.getElementById("net-income") as HTMLUListElement,
-        operatingCashFlow: document.getElementById("operating-cash-flow") as HTMLUListElement,
-        divPayout: document.getElementById("div-payout") as HTMLUListElement,
-    }
-}
-

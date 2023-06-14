@@ -1,10 +1,14 @@
 import Api from "./api";
 import {
-    getFundamentalElements, getRevenueElements, getBalanceElements, getCashFlowElements,
+    getFundamentalElements,
     NumberCompactor, PercentCompactor, LowerCase, CurrencyCompactor,
 } from "./util";
-import type { Balance, CashFlow, Fundamentals, Income } from "./apiTypes";
+import type { Balance, CashFlow, Fundamentals, Income, AnnualReport } from "./apiTypes";
 import type { FundamentalElements } from "./searchTypes";
+import { Chart, registerables } from "chart.js";
+import type { ChartItem } from "chart.js";
+
+Chart.register(...registerables);
 
 let searchBtn = document.getElementById("searchbtn") as HTMLButtonElement;
 
@@ -37,105 +41,104 @@ async function fundamentals() {
     fundamentalElements.exdivdateEl.innerText = fundamentals.ExDividendDate;
 }
 
+function chartFactory(el: ChartItem, d: AnnualReport, label: string): Chart {
+    return new Chart(
+        el,
+        {
+            type: 'bar',
+            options: {
+                animation: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        enabled: false
+                    }
+                },
+                scales: {
+                    y: {
+                        ticks: {
+                            callback: function(v) {
+                                return new CurrencyCompactor(v.toString()).out();
+                            },
+                        }
+                    }
+                },
+            },
+            data: {
+                labels: d.dates.map(i => i),
+                    datasets: [
+                    {
+                        label: label,
+                        data: d.data.map(i => parseInt(i)),
+                    }
+                ]
+            }
+        }
+    );
+}
+
 async function revenue() {
     let r: Income = await Api.income();
-    let revenueElements = getRevenueElements();
-    let currencyFormatter = new CurrencyCompactor('1');
-    r.annualReports.forEach((i) => {
-        let revenueLI = document.createElement("li");
-        let dateElement = document.createElement("p");
-        let revenueAmtElement = document.createElement("p");
-
-        dateElement.innerText = i.fiscalDateEnding;
-
-        currencyFormatter.val = i.totalRevenue;
-        revenueAmtElement.innerText = currencyFormatter.out();
-
-        revenueLI.append(dateElement, revenueAmtElement);
-        revenueElements.totalRevenue.append(revenueLI);
-
-        revenueLI.classList.add('flex', 'gap-2');
-        dateElement.classList.add('text-xl');
-        revenueAmtElement.classList.add('text-xl');
-    });
+    r.annualReports.reverse();
+    let el = document.getElementById('total-revenue') as ChartItem;
+    let totalRev: AnnualReport = {
+        dates: r.annualReports.map(i => i.fiscalDateEnding),
+        data: r.annualReports.map(i => i.totalRevenue),
+    };
+    chartFactory(el, totalRev, "total revenue");
 }
 
 async function balance() {
     let r: Balance = await Api.balance();
-    let balanceElements = getBalanceElements();
-    let currencyFormatter = new CurrencyCompactor('1');
-    r.annualReports.forEach((i) => {
-        let totalAssetsLI = document.createElement("li");
-        let dateElement = document.createElement("p");
-        let totalAssetsEl = document.createElement("p");
-        let totalLiabilitiesLI = document.createElement("li");
-        let totalLiabilitiesEL = document.createElement("p");
-        let cashLI = document.createElement("li");
-        let cashEl = document.createElement("p");
-
-        dateElement.classList.add('text-xl'); // do this first since we deep clone it
-
-        dateElement.innerText = i.fiscalDateEnding;
-        currencyFormatter.val = i.totalAssets;
-        totalAssetsEl.innerText = currencyFormatter.out();
-        currencyFormatter.val = i.totalLiabilities;
-        totalLiabilitiesEL.innerText = currencyFormatter.out();
-        currencyFormatter.val = i.cashAndCashEquivalentsAtCarryingValue;
-        cashEl.innerText = currencyFormatter.out();
-
-        totalAssetsLI.append(dateElement, totalAssetsEl);
-        totalLiabilitiesLI.append(dateElement.cloneNode(true), totalLiabilitiesEL)
-        cashLI.append(dateElement.cloneNode(true), cashEl);
-        balanceElements.totalAssets.append(totalAssetsLI);
-        balanceElements.totalLiabilities.append(totalLiabilitiesLI);
-        balanceElements.cash.append(cashLI);
-
-        totalAssetsLI.classList.add("flex", "gap-2");
-        totalLiabilitiesLI.classList.add("flex", "gap-2");
-        cashLI.classList.add("flex", "gap-2");
-        totalAssetsEl.classList.add('text-xl');
-        totalLiabilitiesEL.classList.add('text-xl');
-        cashEl.classList.add("text-xl");
-    });
+    r.annualReports.reverse();
+    let assetsEl = document.getElementById("total-assets") as ChartItem;
+    let cashEl = document.getElementById("cash") as ChartItem;
+    let liabilitiesEl = document.getElementById("total-liabilities") as ChartItem;
+    let dates = r.annualReports.map(i => i.fiscalDateEnding);
+    let totalAssets: AnnualReport = {
+        dates: dates,
+        data: r.annualReports.map(i => i.totalAssets),
+    };
+    let cash: AnnualReport = {
+        dates: dates,
+        data: r.annualReports.map(i => i.cashAndCashEquivalentsAtCarryingValue),
+    };
+    let totalLiabilities: AnnualReport = {
+        dates: dates,
+        data: r.annualReports.map(i => i.totalLiabilities),
+    };
+    chartFactory(assetsEl, totalAssets, "total assets");
+    chartFactory(cashEl, cash, "cash");
+    chartFactory(liabilitiesEl, totalLiabilities, "total liabilities");
 }
 
 async function cashflow() {
     let r: CashFlow = await Api.cashflow();
-    let cashFlowElements = getCashFlowElements();
-    let currencyFormatter = new CurrencyCompactor("1");
-    r.annualReports.forEach((i) => {
-        let netIncomeLI = document.createElement("li");
-        let operatingCashFlowLI = document.createElement("li");
-        let divPayoutLI = document.createElement("li");
-        let dateElement = document.createElement("p");
-        let netIncomeEl = document.createElement("p");
-        let operatingCashFlowEl = document.createElement("p");
-        let divPayoutEl = document.createElement("p");
+    let netIncomeEl = document.getElementById("net-income") as ChartItem;
+    let operatingCashFlowEl = document.getElementById("operating-cash-flow") as ChartItem;
+    let divPayoutEl = document.getElementById("div-payout") as ChartItem;
 
-        dateElement.classList.add('text-xl'); // do this first since we deep clone it
+    r.annualReports.reverse();
 
-        dateElement.innerText = i.fiscalDateEnding;
-        currencyFormatter.val = i.netIncome;
-        netIncomeEl.innerText = currencyFormatter.out();
-        currencyFormatter.val = i.operatingCashflow;
-        operatingCashFlowEl.innerText = currencyFormatter.out();
-        currencyFormatter.val = i.dividendPayout;
-        divPayoutEl.innerText = currencyFormatter.out();
+    let dates = r.annualReports.map(i => i.fiscalDateEnding);
+    let netIncome: AnnualReport = {
+        dates: dates,
+        data: r.annualReports.map(i => i.netIncome),
+    };
+    let operatingCashFlow: AnnualReport = {
+        dates: dates,
+        data: r.annualReports.map(i => i.operatingCashflow),
+    };
+    let divPayout: AnnualReport = {
+        dates: dates,
+        data: r.annualReports.map(i => i.dividendPayout),
+    };
 
-        netIncomeLI.append(dateElement, netIncomeEl);
-        operatingCashFlowLI.append(dateElement.cloneNode(true), operatingCashFlowEl);
-        divPayoutLI.append(dateElement.cloneNode(true), divPayoutEl);
-        cashFlowElements.netIncome.append(netIncomeLI);
-        cashFlowElements.operatingCashFlow.append(operatingCashFlowLI);
-        cashFlowElements.divPayout.append(divPayoutLI);
-
-        netIncomeEl.classList.add("text-xl");
-        netIncomeLI.classList.add("flex", "gap-2");
-        operatingCashFlowEl.classList.add("text-xl");
-        operatingCashFlowLI.classList.add("flex", "gap-2");
-        divPayoutEl.classList.add("text-xl");
-        divPayoutLI.classList.add("flex", "gap-2");
-    });
+    chartFactory(netIncomeEl, netIncome, "net income");
+    chartFactory(operatingCashFlowEl, operatingCashFlow, "net income");
+    chartFactory(divPayoutEl, divPayout, "net income");
 }
 
 async function search() {

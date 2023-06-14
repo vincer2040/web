@@ -165,3 +165,8 @@ export type CashFlow = {
     annualReports: Array<CashFlowReport>,
     quartlyReports: Array<CashFlowReport>,
 }
+
+export type AnnualReport = {
+    dates: Array<string>,
+    data: Array<string>,
+};
