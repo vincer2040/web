@@ -22,20 +22,3 @@ export type FundamentalElements = {
     divyieldel: HTMLParagraphElement;
     exdivdateEl: HTMLParagraphElement;
 }
-
-export type RevenueElements = {
-    totalRevenue: HTMLUListElement;
-};
-
-export type BalanceElements = {
-    totalAssets: HTMLUListElement;
-    cash: HTMLUListElement;
-    totalLiabilities: HTMLUListElement;
-};
-
-export type CashFlowElements = {
-    netIncome: HTMLUListElement;
-    operatingCashFlow: HTMLUListElement;
-    divPayout: HTMLUListElement;
-};
-

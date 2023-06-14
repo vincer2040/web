@@ -10,7 +10,13 @@
         <title>Search</title>
     </head>
     <body>
-        <button class="bg-sky-500 p-2 rounded-md text-sky-50" id="searchbtn">search</button>
+        <section class="grid place-items-center p-4">
+            <form class="flex gap-3 align-items-center justify-center">
+                <label for="symbol" class="grid place-items-center text-xl">provide symbol: </label>
+                <input type="text" id="symbol" name="symbol" class="border-sky-500 border-2 rounded-md text-xl pl-2">
+                <button class="bg-sky-500 p-2 rounded-md text-sky-50 text-xl" id="searchbtn">search</button>
+            </form>
+        </section>
         <main class="grid place-items-center">
             <section class="flex gap-2">
                 <h1 class="text-3xl">name: </h1>

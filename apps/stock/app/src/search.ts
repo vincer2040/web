@@ -12,9 +12,9 @@ Chart.register(...registerables);
 
 let searchBtn = document.getElementById("searchbtn") as HTMLButtonElement;
 
-async function fundamentals() {
+async function fundamentals(symbol: string) {
     let fundamentalElements: FundamentalElements = getFundamentalElements();
-    let fundamentals: Fundamentals = await Api.fundamentals("aapl");
+    let fundamentals: Fundamentals = await Api.fundamentals(symbol);
 
     let currencyFormatter = new CurrencyCompactor(fundamentals.MarketCapitalization);
     let numberFormatter = new NumberCompactor(fundamentals.SharesOutstanding);
@@ -67,7 +67,7 @@ function chartFactory(el: ChartItem, d: AnnualReport, label: string): Chart {
                 },
             },
             data: {
-                labels: d.dates.map(i => i),
+                labels: d.dates,
                     datasets: [
                     {
                         label: label,
@@ -79,8 +79,8 @@ function chartFactory(el: ChartItem, d: AnnualReport, label: string): Chart {
     );
 }
 
-async function revenue() {
-    let r: Income = await Api.income("aapl");
+async function revenue(symbol: string) {
+    let r: Income = await Api.income(symbol);
     r.annualReports.reverse();
     let el = document.getElementById('total-revenue') as ChartItem;
     let totalRev: AnnualReport = {
@@ -90,8 +90,8 @@ async function revenue() {
     chartFactory(el, totalRev, "total revenue");
 }
 
-async function balance() {
-    let r: Balance = await Api.balance("aapl");
+async function balance(symbol: string) {
+    let r: Balance = await Api.balance(symbol);
     r.annualReports.reverse();
     let assetsEl = document.getElementById("total-assets") as ChartItem;
     let cashEl = document.getElementById("cash") as ChartItem;
@@ -114,8 +114,8 @@ async function balance() {
     chartFactory(liabilitiesEl, totalLiabilities, "total liabilities");
 }
 
-async function cashflow() {
-    let r: CashFlow = await Api.cashflow("aapl");
+async function cashflow(symbol: string) {
+    let r: CashFlow = await Api.cashflow(symbol);
     let netIncomeEl = document.getElementById("net-income") as ChartItem;
     let operatingCashFlowEl = document.getElementById("operating-cash-flow") as ChartItem;
     let divPayoutEl = document.getElementById("div-payout") as ChartItem;
@@ -141,8 +141,26 @@ async function cashflow() {
     chartFactory(divPayoutEl, divPayout, "net income");
 }
 
-async function search() {
-    await Promise.all([fundamentals(), revenue(), balance(), cashflow()]);
+function getSymbol(): string {
+    let symbolInputEl = document.getElementById("symbol") as HTMLInputElement;
+    let symbol = symbolInputEl.value;
+    return symbol;
+}
+
+function disableSearchBtn(btn: HTMLButtonElement) {
+    btn.disabled = true;
+}
+
+function enableSearchBtn(btn: HTMLButtonElement) {
+    btn.disabled = false;
+}
+
+async function search(e: MouseEvent) {
+    let symbol = getSymbol();
+    e.preventDefault();
+    disableSearchBtn(e.target as HTMLButtonElement);
+    await Promise.all([fundamentals(symbol), revenue(symbol), balance(symbol), cashflow(symbol)]);
+    enableSearchBtn(e.target as HTMLButtonElement);
 }
 
 searchBtn.addEventListener("click", search);
