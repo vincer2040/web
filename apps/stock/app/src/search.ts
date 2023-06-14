@@ -10,7 +10,25 @@ import type { ChartItem } from "chart.js";
 
 Chart.register(...registerables);
 
+class ChartManager {
+    private charts: Array<Chart>;
+    constructor() {
+        this.charts = new Array();
+    }
+
+    push(c: Chart) {
+        this.charts.push(c);
+    }
+
+    destroyAll() {
+        this.charts.forEach(c => c.destroy());
+        this.charts = new Array();
+    }
+}
+
 let searchBtn = document.getElementById("searchbtn") as HTMLButtonElement;
+
+let chartManager = new ChartManager();
 
 async function fundamentals(symbol: string) {
     let fundamentalElements: FundamentalElements = getFundamentalElements();
@@ -87,7 +105,7 @@ async function revenue(symbol: string) {
         dates: r.annualReports.map(i => i.fiscalDateEnding),
         data: r.annualReports.map(i => i.totalRevenue),
     };
-    chartFactory(el, totalRev, "total revenue");
+    chartManager.push(chartFactory(el, totalRev, "total revenue"));
 }
 
 async function balance(symbol: string) {
@@ -109,9 +127,9 @@ async function balance(symbol: string) {
         dates: dates,
         data: r.annualReports.map(i => i.totalLiabilities),
     };
-    chartFactory(assetsEl, totalAssets, "total assets");
-    chartFactory(cashEl, cash, "cash");
-    chartFactory(liabilitiesEl, totalLiabilities, "total liabilities");
+    chartManager.push(chartFactory(assetsEl, totalAssets, "total assets"));
+    chartManager.push(chartFactory(cashEl, cash, "cash"));
+    chartManager.push(chartFactory(liabilitiesEl, totalLiabilities, "total liabilities"));
 }
 
 async function cashflow(symbol: string) {
@@ -136,9 +154,9 @@ async function cashflow(symbol: string) {
         data: r.annualReports.map(i => i.dividendPayout),
     };
 
-    chartFactory(netIncomeEl, netIncome, "net income");
-    chartFactory(operatingCashFlowEl, operatingCashFlow, "net income");
-    chartFactory(divPayoutEl, divPayout, "net income");
+    chartManager.push(chartFactory(netIncomeEl, netIncome, "net income"));
+    chartManager.push(chartFactory(operatingCashFlowEl, operatingCashFlow, "net income"));
+    chartManager.push(chartFactory(divPayoutEl, divPayout, "net income"));
 }
 
 function getSymbol(): string {
@@ -159,6 +177,7 @@ async function search(e: MouseEvent) {
     let symbol = getSymbol();
     e.preventDefault();
     disableSearchBtn(e.target as HTMLButtonElement);
+    chartManager.destroyAll();
     await Promise.all([fundamentals(symbol), revenue(symbol), balance(symbol), cashflow(symbol)]);
     enableSearchBtn(e.target as HTMLButtonElement);
 }
