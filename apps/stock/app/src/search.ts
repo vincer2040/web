@@ -14,7 +14,7 @@ let searchBtn = document.getElementById("searchbtn") as HTMLButtonElement;
 
 async function fundamentals() {
     let fundamentalElements: FundamentalElements = getFundamentalElements();
-    let fundamentals: Fundamentals = await Api.fundamentals();
+    let fundamentals: Fundamentals = await Api.fundamentals("aapl");
 
     let currencyFormatter = new CurrencyCompactor(fundamentals.MarketCapitalization);
     let numberFormatter = new NumberCompactor(fundamentals.SharesOutstanding);
@@ -80,7 +80,7 @@ function chartFactory(el: ChartItem, d: AnnualReport, label: string): Chart {
 }
 
 async function revenue() {
-    let r: Income = await Api.income();
+    let r: Income = await Api.income("aapl");
     r.annualReports.reverse();
     let el = document.getElementById('total-revenue') as ChartItem;
     let totalRev: AnnualReport = {
@@ -91,7 +91,7 @@ async function revenue() {
 }
 
 async function balance() {
-    let r: Balance = await Api.balance();
+    let r: Balance = await Api.balance("aapl");
     r.annualReports.reverse();
     let assetsEl = document.getElementById("total-assets") as ChartItem;
     let cashEl = document.getElementById("cash") as ChartItem;
@@ -115,7 +115,7 @@ async function balance() {
 }
 
 async function cashflow() {
-    let r: CashFlow = await Api.cashflow();
+    let r: CashFlow = await Api.cashflow("aapl");
     let netIncomeEl = document.getElementById("net-income") as ChartItem;
     let operatingCashFlowEl = document.getElementById("operating-cash-flow") as ChartItem;
     let divPayoutEl = document.getElementById("div-payout") as ChartItem;

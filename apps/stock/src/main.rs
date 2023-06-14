@@ -1,5 +1,5 @@
 use axum::{
-    extract::State,
+    extract::{State, Path},
     routing::get,
     Router,
     response::{
@@ -32,11 +32,11 @@ async fn main() {
     let app = Router::new()
         .route("/", get(root_get))
         .route("/search", get(search_get))
-        .route("/api/fundamentals", get(api_get_fundamentals))
-        .route("/api/income", get(api_get_income))
-        .route("/api/balance", get(api_get_balance))
-        .route("/api/cash", get(api_get_cash))
-        .route("/api/earnings", get(api_get_earnings))
+        .route("/api/fundamentals/:symbol", get(api_get_fundamentals))
+        .route("/api/income/:symbol", get(api_get_income))
+        .route("/api/balance/:symbol", get(api_get_balance))
+        .route("/api/cash/:symbol", get(api_get_cash))
+        .route("/api/earnings/:symbol", get(api_get_earnings))
         .with_state(shared_state);
     println!("running: http://localhost:42069");
     axum::Server::bind(&"0.0.0.0:42069".parse().expect("address to parse"))
@@ -55,33 +55,38 @@ async fn search_get() -> Html<String> {
     Html(file)
 }
 
-async fn api_get_fundamentals(State(state): State<Arc<AppState>>) -> Json<Fundamentals> {
+async fn api_get_fundamentals(State(state): State<Arc<AppState>>, Path(symbol): Path<String>) -> Json<Fundamentals> {
     let api = &state.api;
-    let fundamentals = api.fundamentals("AAPL").await.expect("yes");
+    let symb = symbol.to_uppercase();
+    let fundamentals = api.fundamentals(&symb).await.expect("yes");
     Json(fundamentals)
 }
 
-async fn api_get_income(State(state): State<Arc<AppState>>) -> Json<Income> {
+async fn api_get_income(State(state): State<Arc<AppState>>, Path(symbol): Path<String>) -> Json<Income> {
     let api = &state.api;
-    let income = api.income("AAPL").await.expect("yes");
+    let symb = symbol.to_uppercase();
+    let income = api.income(&symb).await.expect("yes");
     Json(income)
 }
 
-async fn api_get_balance(State(state): State<Arc<AppState>>) -> Json<Balance> {
+async fn api_get_balance(State(state): State<Arc<AppState>>, Path(symbol): Path<String>) -> Json<Balance> {
     let api = &state.api;
-    let balance = api.balance_sheet("AAPL").await.expect("yes");
+    let symb = symbol.to_uppercase();
+    let balance = api.balance_sheet(&symb).await.expect("yes");
     Json(balance)
 }
 
-async fn api_get_cash(State(state): State<Arc<AppState>>) -> Json<CashFlow> {
+async fn api_get_cash(State(state): State<Arc<AppState>>, Path(symbol): Path<String>) -> Json<CashFlow> {
     let api = &state.api;
-    let cash = api.cash_flow("AAPL").await.expect("yes");
+    let symb = symbol.to_uppercase();
+    let cash = api.cash_flow(&symb).await.expect("yes");
     Json(cash)
 }
 
-async fn api_get_earnings(State(state): State<Arc<AppState>>) -> Json<Earnings> {
+async fn api_get_earnings(State(state): State<Arc<AppState>>, Path(symbol): Path<String>) -> Json<Earnings> {
     let api = &state.api;
-    let earnings = api.earnings("AAPL").await.expect("yes");
+    let symb = symbol.to_uppercase();
+    let earnings = api.earnings(&symb).await.expect("yes");
     Json(earnings)
 }
 
