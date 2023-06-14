@@ -37,7 +37,8 @@ async fn main() {
         .route("/api/balance/:symbol", get(api_get_balance))
         .route("/api/cash/:symbol", get(api_get_cash))
         .route("/api/earnings/:symbol", get(api_get_earnings))
-        .with_state(shared_state);
+        .with_state(shared_state)
+        .route("/api/tickers", get(api_get_ticket_list));
     println!("running: http://localhost:42069");
     axum::Server::bind(&"0.0.0.0:42069".parse().expect("address to parse"))
         .serve(app.into_make_service())
@@ -88,6 +89,16 @@ async fn api_get_earnings(State(state): State<Arc<AppState>>, Path(symbol): Path
     let symb = symbol.to_uppercase();
     let earnings = api.earnings(&symb).await.expect("yes");
     Json(earnings)
+}
+
+async fn api_get_ticket_list() -> String {
+    let url = "https://www.sec.gov/files/company_tickers.json";
+    let body = reqwest::get(url)
+        .await.expect("company_tickers")
+        .text()
+        .await.expect("company tickers text");
+    body
+
 }
 
 struct Api {
