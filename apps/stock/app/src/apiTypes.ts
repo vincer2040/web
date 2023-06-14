@@ -170,3 +170,13 @@ export type AnnualReport = {
     dates: Array<string>,
     data: Array<string>,
 };
+
+export type Ticker = {
+    cik_string: number,
+    ticker: string,
+    title: string,
+};
+
+export type TickerList = {
+    [key: string]: Ticker,
+};

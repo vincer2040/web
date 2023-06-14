@@ -1,6 +1,13 @@
-import type { Fundamentals, Income, Balance, CashFlow } from "./apiTypes";
+import type { Fundamentals, Income, Balance, CashFlow, TickerList } from "./apiTypes";
 
 export default class Api {
+    public static async tickers(): Promise<TickerList> {
+        let url = window.location.origin + "/api/tickers";
+        let res = await fetch(url);
+        let r = await res.json();
+        return r;
+    }
+
     public static async fundamentals(symbol: string): Promise<Fundamentals> {
         let url = `http://localhost:42069/api/fundamentals/${symbol}`;
         let res = await fetch(url);
