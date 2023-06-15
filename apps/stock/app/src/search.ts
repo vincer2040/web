@@ -32,11 +32,9 @@ class Tickers {
         this.list = Object.values(data);
     }
 
-    /* not good */
     public search(t: string): Array<Ticker> {
         let st = t.toUpperCase();
         return this.list
-            .map(i => i)
             .filter(i => i.ticker.includes(st));
     }
 
@@ -122,6 +120,7 @@ async function fundamentals(symbol: string) {
     let chartManager = new ChartManager();
     let searchBtn = document.getElementById("searchbtn") as HTMLButtonElement;
     let symbolInputEl = document.getElementById("symbol-input") as HTMLInputElement;
+    let suggestionEl = document.getElementById("suggest") as HTMLTableSectionElement;
 
 
     async function revenue(symbol: string) {
@@ -212,11 +211,28 @@ async function fundamentals(symbol: string) {
         enableSearchBtn(searchBtn);
     }
 
+    function createSuggestion(tickers: Array<Ticker>): Array<HTMLElement> {
+        let elements = tickers
+            .map(i => {
+                let el = document.createElement("section");
+                let tickEl = document.createElement("p");
+                let nameEl = document.createElement("p");
+                tickEl.innerText = i.ticker;
+                nameEl.innerText = i.title;
+                el.append(tickEl, nameEl);
+                el.classList.add("grid", "place-items-center", "grid-cols-2", "gap-3", "w-full");
+                return el;
+            });
+        return elements;
+    }
+
     function typeASearch() {
         let symbol = getSymbol();
         let tickSearch = tickers.search(symbol);
-        let toAppend = tickSearch.slice(0, 3);
-        console.log(toAppend);
+        let suggest = tickSearch.slice(0, 3);
+        let suggested = createSuggestion(suggest);
+        Array.from(suggestionEl.children).forEach(node => node.remove());
+        suggestionEl.append(...suggested);
     }
 
     searchBtn.addEventListener("click", search);
