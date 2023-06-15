@@ -1,22 +1,22 @@
-import type { IntersectionOps, FetchProgressEvent, FlamethrowerOptions, RouteChangeData } from "./interfaces";
+import type { FetchProgressEvent, FlamethrowerOptions, RouteChangeData } from "./interfaces";
 import { addToPushState, handleLinkClick, handlePopState, scrollTo } from "./handlers";
 import { mergeHead, formatNextDocument, replaceBody, runScripts } from "./dom";
-import { intersectionOptsFactory, Cache } from "./cache";
+
+const intersectionOpts = {
+    root: null,
+    rootMargin: "0px",
+    threshold: 1.0,
+} as const;
 
 export class Router {
     public enabled = true;
     private prefetched = new Set<string>();
     private observer: IntersectionObserver;
-    private observerOptsCache: Cache<IntersectionOps>;
 
     constructor(private opts?: FlamethrowerOptions) {
         if (!this.opts) {
             this.opts.log = false;
             this.opts.pageTransitions = false;
-        }
-
-        if (this.opts.prefetch === "visible") {
-            this.observerOptsCache = new Cache(intersectionOptsFactory, 1);
         }
 
         if (window?.history) {
@@ -84,8 +84,6 @@ export class Router {
     }
 
     private prefetchVisible(): void {
-        const intersectionOpts = this.observerOptsCache.get();
-        this.observerOptsCache.toCache(intersectionOpts);
         if ("IntersectionObserver" in window) {
             this.observer ||= new IntersectionObserver((entries, observer) => {
                 entries.forEach((entry) => {
