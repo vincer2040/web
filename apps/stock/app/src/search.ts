@@ -114,6 +114,11 @@ async function fundamentals(symbol: string) {
     fundamentalElements.exdivdateEl.innerText = fundamentals.ExDividendDate;
 }
 
+/**
+ * FP bros be like 'this is not a class.
+ * no classes here. definetly not a
+ * class we're using here'
+ */
 (async () => {
     let ticks = await Api.tickers();
     let tickers = new Tickers(ticks);
