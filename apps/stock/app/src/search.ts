@@ -125,18 +125,29 @@ async function fundamentals(symbol: string) {
     let chartManager = new ChartManager();
     let searchBtn = document.getElementById("searchbtn") as HTMLButtonElement;
     let symbolInputEl = document.getElementById("symbol-input") as HTMLInputElement;
-    let suggestionEl = document.getElementById("suggest") as HTMLTableSectionElement;
-
 
     async function revenue(symbol: string) {
         let r: Income = await Api.income(symbol);
         r.annualReports.reverse();
-        let el = document.getElementById('total-revenue') as ChartItem;
+        let revenueEl = document.getElementById('total-revenue') as ChartItem;
+        let ebitdaEl = document.getElementById('ebitda') as ChartItem;
+        let operatingIncomeEl = document.getElementById("operating-income") as ChartItem;
+        let dates = r.annualReports.map(i => i.fiscalDateEnding);
         let totalRev: AnnualReport = {
-            dates: r.annualReports.map(i => i.fiscalDateEnding),
-                data: r.annualReports.map(i => i.totalRevenue),
+            dates,
+            data: r.annualReports.map(i => i.totalRevenue),
         };
-        chartManager.push(chartFactory(el, totalRev, "total revenue"));
+        let ebitda: AnnualReport = {
+            dates,
+            data: r.annualReports.map(i => i.ebitda),
+        };
+        let operatingIncome: AnnualReport = {
+            dates,
+            data: r.annualReports.map(i => i.operatingIncome),
+        };
+        chartManager.push(chartFactory(revenueEl, totalRev, "total revenue"));
+        chartManager.push(chartFactory(ebitdaEl, ebitda, "ebitda"));
+        chartManager.push(chartFactory(operatingIncomeEl, operatingIncome, "operating income"));
     }
 
     async function balance(symbol: string) {
@@ -216,31 +227,6 @@ async function fundamentals(symbol: string) {
         enableSearchBtn(searchBtn);
     }
 
-    function createSuggestion(tickers: Array<Ticker>): Array<HTMLElement> {
-        let elements = tickers
-            .map(i => {
-                let el = document.createElement("section");
-                let tickEl = document.createElement("p");
-                let nameEl = document.createElement("p");
-                tickEl.innerText = i.ticker;
-                nameEl.innerText = i.title;
-                el.append(tickEl, nameEl);
-                el.classList.add("grid", "place-items-center", "grid-cols-2", "gap-3", "w-full");
-                return el;
-            });
-        return elements;
-    }
-
-    function typeASearch() {
-        let symbol = getSymbol();
-        let tickSearch = tickers.search(symbol);
-        let suggest = tickSearch.slice(0, 3);
-        let suggested = createSuggestion(suggest);
-        Array.from(suggestionEl.children).forEach(node => node.remove());
-        suggestionEl.append(...suggested);
-    }
-
     searchBtn.addEventListener("click", search);
-    symbolInputEl.addEventListener('keyup', typeASearch);
 })();
 
