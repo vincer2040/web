@@ -1,0 +1,20 @@
+{
+    "name": "cpus-app",
+    "private": true,
+    "version": "0.0.0",
+    "type": "module",
+    "scripts": {
+        "dev": "vite",
+        "build": "tsc && vite build",
+        "preview": "vite preview"
+    },
+    "dependencies": {
+        "observable": "workspace:*"
+    },
+    "devDependencies": {
+        "typescript": "^5.0.2",
+        "postcss": "^8.4.23",
+        "tailwindcss": "^3.3.2",
+        "vite": "^4.3.9"
+    }
+}
