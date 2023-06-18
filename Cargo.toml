@@ -3,6 +3,7 @@
 members = [
     "apps/stock",
     "apps/tmpl",
+    "apps/cpus",
 ]
 
 [workspace.dependencies]
