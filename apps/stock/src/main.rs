@@ -1,6 +1,12 @@
 use axum::{
-    extract::{State, Path},
-    routing::get,
+    extract::{
+        State,
+        Path
+    },
+    routing::{
+        get,
+        post
+    },
     Router,
     response::{
         Html,
@@ -14,9 +20,37 @@ use serde::{
 use dotenv::dotenv;
 use anyhow::Result;
 use std::sync::Arc;
+use argon2::{
+    password_hash::{
+        rand_core::OsRng,
+        PasswordHash, PasswordHasher, PasswordVerifier, SaltString
+    },
+    Argon2
+};
 
 struct AppState {
     api: Api,
+}
+
+#[derive(Deserialize, Serialize, Debug)]
+struct EmailPassword {
+    email: String,
+    password: String,
+}
+
+trait Authenticate {
+    fn authenticate(self) -> Result<bool>;
+}
+
+impl Authenticate for EmailPassword {
+    fn authenticate(self) -> Result<bool> {
+        let salt = SaltString::generate(&mut OsRng);
+        let pbytes = self.password.as_bytes();
+        let argon2 = Argon2::default();
+        let hash = argon2.hash_password(pbytes, &salt).expect("argon2").to_string();
+        println!("{}", hash);
+        Ok(true)
+    }
 }
 
 #[tokio::main]
@@ -32,6 +66,8 @@ async fn main() {
     let app = Router::new()
         .route("/", get(root_get))
         .route("/search", get(search_get))
+        .route("/signin/", get(signin_get))
+        .route("/auth", post(auth_post))
         .route("/api/fundamentals/:symbol", get(api_get_fundamentals))
         .route("/api/income/:symbol", get(api_get_income))
         .route("/api/balance/:symbol", get(api_get_balance))
@@ -54,6 +90,16 @@ async fn root_get() -> Html<String> {
 async fn search_get() -> Html<String> {
     let file = tokio::fs::read_to_string("./apps/stock/app/search/index.html").await.expect("html to be read");
     Html(file)
+}
+
+async fn signin_get() -> Html<String> {
+    let file = tokio::fs::read_to_string("./apps/stock/app/signin/index.html").await.expect("html to be read");
+    Html(file)
+}
+
+async fn auth_post(Json(payload): Json<EmailPassword>) -> Json<bool>{
+    payload.authenticate().expect("authenticate");
+    Json(true)
 }
 
 async fn api_get_fundamentals(State(state): State<Arc<AppState>>, Path(symbol): Path<String>) -> Json<Fundamentals> {
@@ -98,7 +144,6 @@ async fn api_get_ticket_list() -> String {
         .text()
         .await.expect("company tickers text");
     body
-
 }
 
 struct Api {

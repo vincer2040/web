@@ -124,6 +124,7 @@ async function fundamentals(symbol: string) {
     let tickers = new Tickers(ticks);
     let chartManager = new ChartManager();
     let searchBtn = document.getElementById("searchbtn") as HTMLButtonElement;
+    let searchForm = document.getElementById("search") as HTMLFormElement;
     let symbolInputEl = document.getElementById("symbol-input") as HTMLInputElement;
 
     async function revenue(symbol: string) {
@@ -214,7 +215,7 @@ async function fundamentals(symbol: string) {
         btn.disabled = false;
     }
 
-    async function search(e: MouseEvent) {
+    async function search(e: Event) {
         let symbol = getSymbol();
         e.preventDefault();
         if (!tickers.isValid(symbol)) {
@@ -227,6 +228,6 @@ async function fundamentals(symbol: string) {
         enableSearchBtn(searchBtn);
     }
 
-    searchBtn.addEventListener("click", search);
+    searchForm.addEventListener("submit", search);
 })();
 

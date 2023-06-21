@@ -12,3 +12,4 @@ axum = { workspace = true }
 dotenv = "0.15.0"
 reqwest = { version = "0.11.18", features = ["json"] }
 serde = { version = "1.0.163", features = ["derive"] }
+argon2 = "0.5.0"

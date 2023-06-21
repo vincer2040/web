@@ -115,9 +115,7 @@ function createWebSocket(url: string): WebSocket {
 
 function main() {
     let cpuUrl = getWsURL("/realtime/cpus");
-    let processUrl = getWsURL("/realtime/processes");
     let cpuws = createWebSocket(cpuUrl);
-    let processws = createWebSocket(processUrl);
     let cpuSubject = new CpuSubject();
     let processSubject = new ProcessSubject();
     let cpuObserver = new CpuObserver();
@@ -127,10 +125,6 @@ function main() {
     cpuws.onmessage = (ev) => {
         let data: Cpus = JSON.parse(ev.data) as Cpus;
         cpuSubject.cpus = data;
-    }
-    processws.onmessage = (ev) => {
-        let data: Processes = JSON.parse(ev.data) as Processes;
-        processSubject.processes = data;
     }
 }
 

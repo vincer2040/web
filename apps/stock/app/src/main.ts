@@ -1,5 +1,3 @@
-import Api from "./api";
-import type { Fundamentals } from "./apiTypes";
 import router from "router";
 
 let r = router({prefetch: "visible", log: false});
