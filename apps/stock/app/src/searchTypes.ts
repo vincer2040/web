@@ -1,5 +1,5 @@
 export type NumberFormatter = {
-    out: () => string;
+    out(): string;
 }
 
 export type StringFormatter = NumberFormatter;
