@@ -3,10 +3,11 @@ import {
     getFundamentalElements,
     NumberCompactor, PercentCompactor, LowerCase, CurrencyCompactor,
 } from "./util";
-import type { Balance, CashFlow, Fundamentals, Income, AnnualReport, TickerList, Ticker } from "./apiTypes";
+import type { Balance, CashFlow, Fundamentals, Income, AnnualReport, TickerList, Ticker, IncomeReport, CashFlowReport } from "./apiTypes";
 import type { FundamentalElements } from "./searchTypes";
 import { Chart, registerables } from "chart.js";
 import type { ChartItem } from "chart.js";
+import { BalanceReport } from "./apiTypes";
 
 Chart.register(...registerables);
 
@@ -85,47 +86,48 @@ function chartFactory(el: ChartItem, d: AnnualReport, label: string): Chart {
     );
 }
 
-async function fundamentals(symbol: string) {
-    let fundamentalElements: FundamentalElements = getFundamentalElements();
-    let fundamentals: Fundamentals = await Api.fundamentals(symbol);
-
-    let currencyFormatter = new CurrencyCompactor(fundamentals.MarketCapitalization);
-    let numberFormatter = new NumberCompactor(fundamentals.SharesOutstanding);
-    let percentFormatter = new PercentCompactor(fundamentals.DividendYield);
-    let lowcaseFormatter = new LowerCase(fundamentals.Sector);
-
-    fundamentalElements.nameEl.innerText = fundamentals.Name;
-    fundamentalElements.symbolEl.innerText = fundamentals.Symbol;
-    fundamentalElements.sectorEl.innerText = lowcaseFormatter.out();
-    lowcaseFormatter.val = fundamentals.Industry;
-    fundamentalElements.industryEl.innerText = lowcaseFormatter.out();
-    fundamentalElements.exchangeEl.innerText = fundamentals.Exchange;
-    fundamentalElements.marketcapEl.innerText = currencyFormatter.out();
-    fundamentalElements.sharesoutstandingEl.innerText = numberFormatter.out();
-    fundamentalElements.epsEl.innerText = fundamentals.EPS;
-    fundamentalElements.evtoebitdaEl.innerText = fundamentals.EVToEBITDA;
-    fundamentalElements.peEl.innerText = fundamentals.PERatio;
-    fundamentalElements.fpeEl.innerText = fundamentals.ForwardPE;
-    fundamentalElements.bookEl.innerText = fundamentals.BookValue;
-    fundamentalElements.pricetobookEl.innerText = fundamentals.PriceToBookRatio;
-    currencyFormatter.val = fundamentals.DividendPerShare;
-    fundamentalElements.divpershareEl.innerText = currencyFormatter.out();
-    fundamentalElements.divyieldel.innerText = percentFormatter.out();
-    fundamentalElements.exdivdateEl.innerText = fundamentals.ExDividendDate;
-}
-
 /**
  * FP bros be like 'this is not a class.
  * no classes here. definetly not a
  * class we're using here'
  */
 (async () => {
-    let ticks = await Api.tickers();
-    let tickers = new Tickers(ticks);
+    // this blocks pretty hard, figure it out
+    // let ticks = await Api.tickers();
+    // let tickers = new Tickers(ticks);
     let chartManager = new ChartManager();
     let searchBtn = document.getElementById("searchbtn") as HTMLButtonElement;
     let searchForm = document.getElementById("search") as HTMLFormElement;
     let symbolInputEl = document.getElementById("symbol-input") as HTMLInputElement;
+
+    async function fundamentals(symbol: string) {
+        let fundamentalElements: FundamentalElements = getFundamentalElements();
+        let fundamentals: Fundamentals = await Api.fundamentals(symbol);
+
+        let currencyFormatter = new CurrencyCompactor(fundamentals.MarketCapitalization);
+        let numberFormatter = new NumberCompactor(fundamentals.SharesOutstanding);
+        let percentFormatter = new PercentCompactor(fundamentals.DividendYield);
+        let lowcaseFormatter = new LowerCase(fundamentals.Sector);
+
+        fundamentalElements.nameEl.innerText = fundamentals.Name;
+        fundamentalElements.symbolEl.innerText = fundamentals.Symbol;
+        fundamentalElements.sectorEl.innerText = lowcaseFormatter.out();
+        lowcaseFormatter.val = fundamentals.Industry;
+        fundamentalElements.industryEl.innerText = lowcaseFormatter.out();
+        fundamentalElements.exchangeEl.innerText = fundamentals.Exchange;
+        fundamentalElements.marketcapEl.innerText = currencyFormatter.out();
+        fundamentalElements.sharesoutstandingEl.innerText = numberFormatter.out();
+        fundamentalElements.epsEl.innerText = fundamentals.EPS;
+        fundamentalElements.evtoebitdaEl.innerText = fundamentals.EVToEBITDA;
+        fundamentalElements.peEl.innerText = fundamentals.PERatio;
+        fundamentalElements.fpeEl.innerText = fundamentals.ForwardPE;
+        fundamentalElements.bookEl.innerText = fundamentals.BookValue;
+        fundamentalElements.pricetobookEl.innerText = fundamentals.PriceToBookRatio;
+        currencyFormatter.val = fundamentals.DividendPerShare;
+        fundamentalElements.divpershareEl.innerText = currencyFormatter.out();
+        fundamentalElements.divyieldel.innerText = percentFormatter.out();
+        fundamentalElements.exdivdateEl.innerText = fundamentals.ExDividendDate;
+    }
 
     async function revenue(symbol: string) {
         let r: Income = await Api.income(symbol);
@@ -133,18 +135,30 @@ async function fundamentals(symbol: string) {
         let revenueEl = document.getElementById('total-revenue') as ChartItem;
         let ebitdaEl = document.getElementById('ebitda') as ChartItem;
         let operatingIncomeEl = document.getElementById("operating-income") as ChartItem;
-        let dates = r.annualReports.map(i => i.fiscalDateEnding);
+        let len = r.annualReports.length;
+        let i: number;
+        let dates: Array<string> = new Array(len);
+        let rev: Array<string> = new Array(len);
+        let ebitdaL: Array<string> = new Array(len);
+        let oi: Array<string> = new Array(len);
+        for (i = 0; i < len; ++i) {
+            let rep: IncomeReport = r.annualReports[i];
+            dates[i] = rep.fiscalDateEnding;
+            rev[i] = rep.totalRevenue;
+            ebitdaL[i] = rep.ebitda;
+            oi[i] = rep.operatingIncome;
+        }
         let totalRev: AnnualReport = {
             dates,
-            data: r.annualReports.map(i => i.totalRevenue),
+            data: rev,
         };
         let ebitda: AnnualReport = {
             dates,
-            data: r.annualReports.map(i => i.ebitda),
+            data: ebitdaL,
         };
         let operatingIncome: AnnualReport = {
             dates,
-            data: r.annualReports.map(i => i.operatingIncome),
+            data: oi,
         };
         chartManager.push(chartFactory(revenueEl, totalRev, "total revenue"));
         chartManager.push(chartFactory(ebitdaEl, ebitda, "ebitda"));
@@ -157,18 +171,30 @@ async function fundamentals(symbol: string) {
         let assetsEl = document.getElementById("total-assets") as ChartItem;
         let cashEl = document.getElementById("cash") as ChartItem;
         let liabilitiesEl = document.getElementById("total-liabilities") as ChartItem;
-        let dates = r.annualReports.map(i => i.fiscalDateEnding);
+        let len = r.annualReports.length;
+        let i: number;
+        let dates: Array<string> = new Array(len);
+        let assets: Array<string> = new Array(len);
+        let cashL: Array<string> = new Array(len);
+        let liabilities: Array<string> = new Array(len);
+        for (i = 0; i < len; ++i) {
+            let rep: BalanceReport = r.annualReports[i];
+            dates[i] = rep.fiscalDateEnding;
+            assets[i] = rep.totalAssets;
+            cashL[i] = rep.cashAndCashEquivalentsAtCarryingValue;
+            liabilities[i] = rep.totalLiabilities;
+        }
         let totalAssets: AnnualReport = {
             dates: dates,
-            data: r.annualReports.map(i => i.totalAssets),
+            data: assets,
         };
         let cash: AnnualReport = {
             dates: dates,
-            data: r.annualReports.map(i => i.cashAndCashEquivalentsAtCarryingValue),
+            data: cashL,
         };
         let totalLiabilities: AnnualReport = {
             dates: dates,
-            data: r.annualReports.map(i => i.totalLiabilities),
+            data: liabilities,
         };
         chartManager.push(chartFactory(assetsEl, totalAssets, "total assets"));
         chartManager.push(chartFactory(cashEl, cash, "cash"));
@@ -183,23 +209,36 @@ async function fundamentals(symbol: string) {
 
         r.annualReports.reverse();
 
-        let dates = r.annualReports.map(i => i.fiscalDateEnding);
+
+        let len = r.annualReports.length;
+        let i: number;
+        let dates: Array<string> = new Array(len);
+        let ni: Array<string> = new Array(len);
+        let ocf: Array<string> = new Array(len);
+        let dp: Array<string> = new Array(len);
+        for (i = 0; i < len; ++i) {
+            let rep: CashFlowReport = r.annualReports[i];
+            dates[i] = rep.fiscalDateEnding;
+            ni[i] = rep.netIncome;
+            ocf[i] = rep.operatingCashflow;
+            dp[i] = rep.dividendPayout;
+        }
         let netIncome: AnnualReport = {
             dates: dates,
-            data: r.annualReports.map(i => i.netIncome),
+            data: ni,
         };
         let operatingCashFlow: AnnualReport = {
             dates: dates,
-            data: r.annualReports.map(i => i.operatingCashflow),
+            data: ocf,
         };
         let divPayout: AnnualReport = {
             dates: dates,
-            data: r.annualReports.map(i => i.dividendPayout),
+            data: dp,
         };
 
         chartManager.push(chartFactory(netIncomeEl, netIncome, "net income"));
-        chartManager.push(chartFactory(operatingCashFlowEl, operatingCashFlow, "net income"));
-        chartManager.push(chartFactory(divPayoutEl, divPayout, "net income"));
+        chartManager.push(chartFactory(operatingCashFlowEl, operatingCashFlow, "operating cash flow"));
+        chartManager.push(chartFactory(divPayoutEl, divPayout, "div payout"));
     }
 
     function getSymbol(): string {
@@ -218,10 +257,10 @@ async function fundamentals(symbol: string) {
     async function search(e: Event) {
         let symbol = getSymbol();
         e.preventDefault();
-        if (!tickers.isValid(symbol)) {
-            console.log("noooooo");
-            return;
-        }
+        // if (!tickers.isValid(symbol)) {
+        //     console.log("noooooo");
+        //     return;
+        // }
         chartManager.destroyAll();
         disableSearchBtn(searchBtn);
         await Promise.all([fundamentals(symbol), revenue(symbol), balance(symbol), cashflow(symbol)]);
@@ -230,4 +269,5 @@ async function fundamentals(symbol: string) {
 
     searchForm.addEventListener("submit", search);
 })();
+
 
