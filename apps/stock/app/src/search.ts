@@ -96,12 +96,26 @@ function chartFactory(el: ChartItem, d: AnnualReport, label: string): Chart {
     // let ticks = await Api.tickers();
     // let tickers = new Tickers(ticks);
     let chartManager = new ChartManager();
+
+    let fundamentalElements: FundamentalElements = getFundamentalElements();
+
     let searchBtn = document.getElementById("searchbtn") as HTMLButtonElement;
     let searchForm = document.getElementById("search") as HTMLFormElement;
     let symbolInputEl = document.getElementById("symbol-input") as HTMLInputElement;
 
+    let revenueEl = document.getElementById('total-revenue') as ChartItem;
+    let ebitdaEl = document.getElementById('ebitda') as ChartItem;
+    let operatingIncomeEl = document.getElementById("operating-income") as ChartItem;
+
+    let assetsEl = document.getElementById("total-assets") as ChartItem;
+    let cashEl = document.getElementById("cash") as ChartItem;
+    let liabilitiesEl = document.getElementById("total-liabilities") as ChartItem;
+
+    let netIncomeEl = document.getElementById("net-income") as ChartItem;
+    let operatingCashFlowEl = document.getElementById("operating-cash-flow") as ChartItem;
+    let divPayoutEl = document.getElementById("div-payout") as ChartItem;
+
     async function fundamentals(symbol: string) {
-        let fundamentalElements: FundamentalElements = getFundamentalElements();
         let fundamentals: Fundamentals = await Api.fundamentals(symbol);
 
         let currencyFormatter = new CurrencyCompactor(fundamentals.MarketCapitalization);
@@ -132,9 +146,6 @@ function chartFactory(el: ChartItem, d: AnnualReport, label: string): Chart {
     async function revenue(symbol: string) {
         let r: Income = await Api.income(symbol);
         r.annualReports.reverse();
-        let revenueEl = document.getElementById('total-revenue') as ChartItem;
-        let ebitdaEl = document.getElementById('ebitda') as ChartItem;
-        let operatingIncomeEl = document.getElementById("operating-income") as ChartItem;
         let len = r.annualReports.length;
         let i: number;
         let dates: Array<string> = new Array(len);
@@ -168,9 +179,6 @@ function chartFactory(el: ChartItem, d: AnnualReport, label: string): Chart {
     async function balance(symbol: string) {
         let r: Balance = await Api.balance(symbol);
         r.annualReports.reverse();
-        let assetsEl = document.getElementById("total-assets") as ChartItem;
-        let cashEl = document.getElementById("cash") as ChartItem;
-        let liabilitiesEl = document.getElementById("total-liabilities") as ChartItem;
         let len = r.annualReports.length;
         let i: number;
         let dates: Array<string> = new Array(len);
@@ -203,13 +211,7 @@ function chartFactory(el: ChartItem, d: AnnualReport, label: string): Chart {
 
     async function cashflow(symbol: string) {
         let r: CashFlow = await Api.cashflow(symbol);
-        let netIncomeEl = document.getElementById("net-income") as ChartItem;
-        let operatingCashFlowEl = document.getElementById("operating-cash-flow") as ChartItem;
-        let divPayoutEl = document.getElementById("div-payout") as ChartItem;
-
         r.annualReports.reverse();
-
-
         let len = r.annualReports.length;
         let i: number;
         let dates: Array<string> = new Array(len);

@@ -4,9 +4,11 @@ members = [
     "apps/stock",
     "apps/tmpl",
     "apps/cpus",
+    "apps/axum-htmx",
 ]
 
 [workspace.dependencies]
 anyhow = "1.0.71"
 tokio = "1.28.1"
 axum = "0.6.18"
+serde = { version = "1.0.163", features = ["derive"] }

@@ -12,6 +12,12 @@ importers:
         specifier: ^1.10.4
         version: 1.10.4
 
+  apps/axum-htmx:
+    devDependencies:
+      tailwindcss:
+        specifier: ^3.3.2
+        version: 3.3.2
+
   apps/cpus/cpus-app:
     dependencies:
       observable:
