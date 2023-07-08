@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>axum-htmx</title>
+        <script src="https://unpkg.com/htmx.org@1.9.2" integrity="sha384-L6OqL9pRWyyFU3+/bjdSri+iIphTN/bvYyM37tICVyOJkWZLpP2vGn6VUEXgzg6h" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="/index.css">
+        <style>
+.clickable:hover {
+    cursor: pointer;
+}
+        </style>
+    </head>
+    <body>
+        <form hx-post="/store" hx-target="#todos" class="grid place-items-center p-4 gap-8">
+            <input id="title" name="title" type="text" class="border-2 border-indigo-500">
+            <button type="submit" class="bg-indigo-500 text-indigo-100 px-4 py-2 rounded-md">Submit</button>
+        </form>
+        <main id="content" class="grid place-items-center gap-4">
+            <h1>Todos:</h1>
+            <div id="todos">
+                <!--#-->
+            </div>
+            <div id="item"></div>
+        </main>
+    </body>
+</html>
