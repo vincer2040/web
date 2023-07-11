@@ -13,13 +13,13 @@
         </style>
     </head>
     <body>
-        <div class="ah-resp">
-            <form hx-post="/store" hx-target="#todos" class="flex flex-col gap-4 p-3 max-w-xs">
+        <div class="flex gap-4 p-10 h-screen">
+            <form hx-post="/store" hx-target="#todos" class="flex flex-col gap-4 p-4 items-center border-r-2 h-full">
                 <h2 class="text-2xl">Add Todo</h2>
                 <input id="title" name="title" type="text" class="border-2 border-indigo-500">
                 <button type="submit" class="bg-indigo-500 text-indigo-100 px-4 py-2 rounded-md">Submit</button>
             </form>
-            <main class="flex flex-col min-h-screen gap-2 items-center" id="content">
+            <main class="flex flex-col gap-2 items-center w-full" id="content">
                 <h2 class="text-2xl">Todos:</h2>
                 <div id="todos">
                     <!--#-->

@@ -100,6 +100,7 @@ async fn store_get(State(db): State<Arc<LexiClient>>, Path(title): Path<String>)
         Ok(v) => match v {
             LexiResult::String(s) => {
                 let deserialized_item: Result<DbEntry, _> = serde_json::from_str(&s);
+
                 match deserialized_item {
                     Ok(di) => {
                         let html = di.create_html(&title);
@@ -173,7 +174,10 @@ async fn root_get(State(db): State<Arc<LexiClient>>) -> Html<String> {
     Html(html)
 }
 
-async fn item_done_post(State(db): State<Arc<LexiClient>>, Path(title): Path<String>) -> Html<String> {
+async fn item_done_post(
+    State(db): State<Arc<LexiClient>>,
+    Path(title): Path<String>,
+) -> Html<String> {
     let item = db.get(&title).await;
     match item {
         Ok(im) => match im {
@@ -266,4 +270,3 @@ impl DbEntry {
         self.create_html(title)
     }
 }
-
