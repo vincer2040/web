@@ -3,8 +3,7 @@ export default {
   content: [
       "./**/*.html",
       "./*.html",
-      "./**/*.ts",
-      "./**/*.tsx",
+      "../src/main.rs",
   ],
   theme: {
     extend: {

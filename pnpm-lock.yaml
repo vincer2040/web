@@ -19,6 +19,10 @@ importers:
         version: 3.3.2
 
   apps/chat/chat-app:
+    dependencies:
+      router:
+        specifier: workspace:*
+        version: link:../../../lib/router
     devDependencies:
       postcss:
         specifier: ^8.4.23

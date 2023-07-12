@@ -8,6 +8,9 @@
         "build": "tsc && vite build",
         "preview": "vite preview"
     },
+    "dependencies": {
+        "router": "workspace:*"
+    },
     "devDependencies": {
         "typescript": "^5.0.2",
         "postcss": "^8.4.23",

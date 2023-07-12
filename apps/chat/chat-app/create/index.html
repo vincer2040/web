@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <link rel="icon" type="image/svg+xml" href="http://localhost:5985/vite.svg" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <script type="module" src="http://localhost:5985/@vite/client"></script>
+        <script defer type="module" src="http://localhost:5985/src/main.ts"></script>
+        <link rel="stylesheet" href="http://localhost:5985/src/index.css">
+        <script data-reload src="https://unpkg.com/htmx.org@1.9.2" integrity="sha384-L6OqL9pRWyyFU3+/bjdSri+iIphTN/bvYyM37tICVyOJkWZLpP2vGn6VUEXgzg6h" crossorigin="anonymous"></script>
+        <title>chat - create room</title>
+    </head>
+    <body>
+        <main class="grid place-items-center h-screen">
+            <article id="content" class="grid place-items-center gap-4">
+                <form class="grid place-items-center gap-3"
+                    hx-post="/create-room"
+                    hx-swap="none"
+                    >
+                    <section class="grid place-items-center">
+                        <label for="name" class="text-xl">enter room name:</label>
+                        <input type="text" id="name" name="name" class="border-2 text-xl">
+                    </section>
+                    <section class="flex gap-3 items-center justify-center">
+                        <button class="border-2 text-xl border-indigo-500/100 px-3 py-2 rounded-md bg-slate-200">submit</button>
+                    </section>
+                </form>
+            </article>
+        </main>
+    </body>
+</html>
