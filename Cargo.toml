@@ -5,6 +5,7 @@ members = [
     "apps/tmpl",
     "apps/cpus",
     "apps/axum-htmx",
+    "apps/chat",
 ]
 
 [workspace.dependencies]
