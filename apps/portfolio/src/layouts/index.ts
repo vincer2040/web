@@ -28,7 +28,7 @@ function app(opts: AppOpts) {
 
 (() => {
     let opts: AppOpts = {
-        production: false,
+        production: true,
     }
     app(opts);
 })();

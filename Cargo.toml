@@ -4,8 +4,8 @@ members = [
     "apps/stock",
     "apps/tmpl",
     "apps/cpus",
-    "apps/axum-htmx",
     "apps/chat",
+    "apps/weather",
 ]
 
 [workspace.dependencies]
