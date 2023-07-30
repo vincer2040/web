@@ -1,3 +1,4 @@
+use axum::{response::Html, routing::get};
 use dotenv;
 use anyhow::Result;
 use serde::Deserialize;
@@ -62,7 +63,24 @@ struct Weather{
 
 #[tokio::main]
 async fn main() -> Result<()> {
+    let app = axum::Router::new()
+        .route("/", get(root_get));
 
+    let addr = &"127.0.0.1:6969".parse()?;
+    let server = axum::Server::bind(addr).serve(app.into_make_service());
+    println!("listening on http://{}", server.local_addr());
+    server.await?;
+
+    Ok(())
+}
+
+async fn root_get() -> Html<String> {
+    let html = tokio::fs::read_to_string("./apps/weather/index.html").await.expect("index.html");
+    Html(html)
+}
+
+#[allow(unused)]
+async fn get_weather() -> Result<()> {
 
     let key = dotenv::var("WEATHER")?;
 
