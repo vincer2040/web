@@ -1,21 +1,20 @@
 ---
-import Header from "../components/header.astro";
-import Footer from "../components/footer.astro";
+import Header from "../components/header/index.astro";
+import Footer from "../components/footer/index.astro";
 ---
 
-<!DOCTYPE html>
 <html lang="en">
 	<head>
 		<meta charset="utf-8" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="viewport" content="width=device-width" />
 		<meta name="generator" content={Astro.generator} />
-        <title>Portfolio</title>
-        <script src="./index.ts"></script>
-    </head>
-    <body class="bg-primary">
+		<title>Vince</title>
+        <script src="./main.ts"></script>
+	</head>
+	<body>
         <Header />
         <slot />
         <Footer />
-    </body>
+	</body>
 </html>
