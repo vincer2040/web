@@ -1,0 +1,12 @@
+---
+import Main from "./main.astro";
+import ProjectLinks from "../components/links/projectlinks.astro";
+---
+
+<Main>
+    <nav>
+        <a href="/projects"><h2>Projects</h2></a>
+        <ProjectLinks />
+    </nav>
+    <slot/>
+</Main>

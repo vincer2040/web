@@ -1,0 +1,5 @@
+(executable
+ (public_name ocaml_htmx)
+ (name main)
+ (libraries dream tyxml ocaml_htmx)
+ (preprocess (pps lwt_ppx)))
