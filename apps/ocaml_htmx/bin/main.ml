@@ -101,25 +101,29 @@ let html_from_todos () =
   | _ ->
     let t =
       List.filter (fun a -> if a.complete then false else true) !global_todos
-      |> List.sort compare_todo
-      |> List.map (fun a -> html_from_todo a)
-      |> ul
     in
-    div [ p [ txt "todo" ]; t ]
+    (match List.length t with
+     | 0 -> p [ txt "nothing to do" ]
+     | _ ->
+       let x =
+         List.sort compare_todo t |> List.map (fun a -> html_from_todo a) |> ul
+       in
+       div [ p [ txt "todo" ]; x ])
 ;;
 
 let html_from_comlete () =
   let len = List.length !global_todos in
   match len with
-  | 0 -> p [ txt "nothing to complete" ]
+  | 0 -> p [ txt "" ]
   | _ ->
     let t =
-      List.filter (fun a -> a.complete) !global_todos
-      |> List.sort compare_todo
-      |> List.map (fun a -> html_from_todo a)
-      |> ul
+      List.filter (fun a -> a.complete) !global_todos |> List.sort compare_todo
     in
-    div [ p [ txt "complete" ]; t ]
+    (match List.length t with
+     | 0 -> p [ txt "nothing complete" ]
+     | _ ->
+       let x = List.map (fun a -> html_from_todo a) t |> ul in
+       div [ p [ txt "complete" ]; x ])
 ;;
 
 let get_todos () =

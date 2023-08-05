@@ -1,8 +1,6 @@
 [workspace]
 
 members = [
-    "apps/stock",
-    "apps/tmpl",
     "apps/cpus",
     "apps/chat",
     "apps/weather",
