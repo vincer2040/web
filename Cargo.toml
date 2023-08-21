@@ -4,6 +4,7 @@ members = [
     "apps/cpus",
     "apps/chat",
     "apps/weather",
+    "apps/news",
 ]
 
 [workspace.dependencies]
