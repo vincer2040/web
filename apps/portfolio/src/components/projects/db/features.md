@@ -16,15 +16,11 @@
     linked lists
     - A resizeable hashable is used to ensure an efficient load-factor
     - Siphash 1-2 is used to hash the keys
-- Store relationships in a graph
-    - Implemented as an adjacency list for more efficient memory usage
-    - The ability to receive a graph from a client and construct it
-    - Perform breadth-first and depth-first search on the adjacency list
 - Create queues and stacks
     - Both implementations use a dynamic array
 - Ability to categorize the data structures with namespaced collections
     - Uses a hash table where the key is the name of the namespace
-    and the value is a structure containing a hashtable, adjacency list, hashset, queue,
+    and the value is a structure containing a hashtable, hashset, queue,
     and stack
     - The data structures are only allocated once the users inserts the first value
     so that memory is not wasted
