@@ -24,4 +24,4 @@ typedef struct {
 
 This implementation is unique to most third-party libraries in that, rather than
 returning the entire structure, it returns just the `data` field, hiding the
-internal header
+internal header.

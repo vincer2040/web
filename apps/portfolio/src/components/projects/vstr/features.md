@@ -1,7 +1,7 @@
 ### Features
 
 - Binary safe strings
-    - most functions in the string standard library rely on the null
+    - Most functions in the string standard library rely on the null
     terminator, making it difficult to work with strings containing binary
     data
     - Not relying on the null terminator allows users to insert
