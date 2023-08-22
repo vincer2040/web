@@ -3,12 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <title>News App</title>
+    <script src="https://unpkg.com/htmx.org@1.9.4"></script>
 </head>
 <body>
     <main>
         <article>
             <h1>News App</h1>
-            <!--#-->
+            <form hx-get="/api/news" hx-target="#news">
+                <section>
+                    <label for="search">provide your query: </label>
+                    <input type="text" id="search" name="search">
+                </section>
+                <section>
+                    <button>search</button>
+                </section>
+            </form>
+            <div id="news">
+                <!--#-->
+            </div>
         </article>
     </main>
 </body>

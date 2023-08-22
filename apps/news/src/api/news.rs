@@ -4,7 +4,7 @@ use serde::Deserialize;
 #[derive(Debug, Deserialize)]
 pub struct Source {
     #[allow(unused)]
-    id: String,
+    id: Option<String>,
     name: String,
 }
 
