@@ -29,8 +29,6 @@ func StockApiGet(c echo.Context) error {
 	alphavantage := os.Getenv("ALPHAVANTAGE")
 	symbol := c.Param("search")
 
-    println(symbol)
-
 	overview, err := utils.GetOverview(symbol, alphavantage)
 	if err != nil {
 		return err
@@ -72,6 +70,9 @@ func StockApiGet(c echo.Context) error {
 
 func LoadApi(c echo.Context) error {
 	symbol := c.FormValue("search")
-	html := fmt.Sprintf("<div class=\"loader\" hx-get=\"api/search/%s\" hx-trigger=\"load\" hx-target=\"#stock\"></div>", symbol)
+	html := fmt.Sprintf(
+        "<div class=\"loader\" hx-get=\"api/search/%s\" hx-trigger=\"load\" hx-target=\"#stock\"></div>",
+        symbol,
+    )
 	return c.HTML(http.StatusOK, html)
 }
