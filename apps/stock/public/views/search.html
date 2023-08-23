@@ -1,0 +1,19 @@
+<section>
+    <section>
+        <h2>Symbol: {{ index . "symbol" }}</h2>
+        <h3>Name: {{ index . "name" }}</h3>
+        <h4>Sector: {{ index . "sector" }}</h4>
+        <h4>Industry: {{ index . "industry" }}</h4>
+        <h4>Address: {{ index . "address" }}</h4>
+    </section>
+    <section>
+        <p>EBITDA: {{ index . "ebitda" }}</p>
+        <p>PE ratio: {{ index . "pe" }}</p>
+        <p>Book value: {{ index . "book" }}</p>
+        <p>EV to EBITDA: {{ index . "ete" }}</p>
+    </section>
+    <section>
+        <p>Div/Share: {{ index . "dps" }}</p>
+        <p>Div yield: {{ index . "dy" }}</p>
+    </section>
+</section>

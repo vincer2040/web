@@ -10,7 +10,10 @@
             <article>
                 <h1>Stock App</h1>
                 <section>
-                    <form hx-get="/api/search">
+                    <form
+                        hx-get="/api/search"
+                        hx-target="#stock"
+                        >
                         <section>
                             <label for="search">enter symbol: </label>
                             <input type="text" name="search" id="search">
@@ -20,6 +23,7 @@
                         </section>
                     </form>
                 </section>
+                <section id="stock"></section>
             </article>
         </main>
     </body>

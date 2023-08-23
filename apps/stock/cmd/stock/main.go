@@ -1,9 +1,10 @@
 package main
 
 import (
+	"html/template"
 	"log"
 
-    "stock/internal/routes"
+	"stock/internal/routes"
 
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
@@ -18,7 +19,13 @@ func main() {
         log.Fatal("Error loading .env file")
     }
 
+    t := &routes.Template{
+        Templates: template.Must(template.ParseGlob("public/views/search.html")),
+    }
+
     e := echo.New()
+
+    e.Renderer = t
 
     e.Use(middleware.Logger())
 
