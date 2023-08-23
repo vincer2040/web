@@ -1,20 +1,73 @@
-<section>
-    <section>
-        <h2>Symbol: {{ index . "symbol" }}</h2>
-        <h3>Name: {{ index . "name" }}</h3>
-        <h4>Sector: {{ index . "sector" }}</h4>
-        <h4>Industry: {{ index . "industry" }}</h4>
-        <h4>Address: {{ index . "address" }}</h4>
-    </section>
-    <section>
-        <p>Market cap: {{ index . "mc" }}</p>
-        <p>EBITDA: {{ index . "ebitda" }}</p>
-        <p>PE ratio: {{ index . "pe" }}</p>
-        <p>Book value: {{ index . "book" }}</p>
-        <p>EV to EBITDA: {{ index . "ete" }}</p>
-    </section>
-    <section>
-        <p>Div/Share: {{ index . "dps" }}</p>
-        <p>Div yield: {{ index . "dy" }}</p>
-    </section>
-</section>
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Stock App</title>
+        <script src="https://unpkg.com/htmx.org@1.9.4"></script>
+        <style>
+.loader {
+    border: 16px solid #f3f3f3; /* Light grey */
+    border-top: 16px solid #3498db; /* Blue */
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+    animation: spin 2s linear infinite;
+}
+
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+        </style>
+    </head>
+    <body id="stock">
+        <header>
+            <section>
+                <h1>Stock App</h1>
+            </section>
+        </header>
+        <main>
+            <article>
+                <section>
+                    <form
+                        hx-get="/api/load"
+                        hx-target="#load"
+                        >
+                        <section>
+                            <label for="search">enter symbol: </label>
+                            <input type="text" name="search" id="search">
+                        </section>
+                        <section>
+                            <button>search</button>
+                        </section>
+                    </form>
+                </section>
+                <section id="load">
+                    <section>
+                        <h2>Symbol: {{ index . "symbol" }}</h2>
+                        <h3>Name: {{ index . "name" }}</h3>
+                        <h4>Sector: {{ index . "sector" }}</h4>
+                        <h4>Industry: {{ index . "industry" }}</h4>
+                        <h4>Address: {{ index . "address" }}</h4>
+                    </section>
+                    <section>
+                        <p>Market cap: {{ index . "mc" }}</p>
+                        <p>EBITDA: {{ index . "ebitda" }}</p>
+                        <p>PE ratio: {{ index . "pe" }}</p>
+                        <p>Book value: {{ index . "book" }}</p>
+                        <p>EV to EBITDA: {{ index . "ete" }}</p>
+                    </section>
+                    <section>
+                        <p>Div/Share: {{ index . "dps" }}</p>
+                        <p>Div yield: {{ index . "dy" }}</p>
+                    </section>
+                </section>
+                <section>
+                    <section>
+                        <h3>Revenue</h3>
+                    </section>
+                </section>
+            </article>
+        </main>
+    </body>
+</html>

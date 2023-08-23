@@ -20,7 +20,7 @@ func main() {
     }
 
     t := &routes.Template{
-        Templates: template.Must(template.ParseGlob("public/views/search.html")),
+        Templates: template.Must(template.ParseGlob("public/views/*.html")),
     }
 
     e := echo.New()
@@ -31,7 +31,7 @@ func main() {
 
     e.Static("/", "static")
     e.GET("/api/load", routes.LoadApi)
-    e.GET("/api/search/:search", routes.StockApiGet)
+    e.GET("/search/:search", routes.StockApiGet)
 
     e.Logger.Fatal(e.Start(":6969"))
 }

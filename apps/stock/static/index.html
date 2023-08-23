@@ -20,14 +20,18 @@
 }
         </style>
     </head>
-    <body>
+    <body id="stock">
+        <header>
+            <section>
+                <h1>Stock App</h1>
+            </section>
+        </header>
         <main>
             <article>
-                <h1>Stock App</h1>
                 <section>
                     <form
                         hx-get="/api/load"
-                        hx-target="#stock"
+                        hx-target="#load"
                         >
                         <section>
                             <label for="search">enter symbol: </label>
@@ -38,7 +42,7 @@
                         </section>
                     </form>
                 </section>
-                <section id="stock"></section>
+                <section id="load"></section>
             </article>
         </main>
     </body>

@@ -34,8 +34,8 @@ func StockApiGet(c echo.Context) error {
 		return err
 	}
 
-	// income, err := utils.GetIncome(symbol, alphavantage)
-	// fmt.Println(income.Symbol)
+	income, err := utils.GetIncome(symbol, alphavantage)
+	fmt.Println(income.Symbol)
 
 	formatedEbitda, err := utils.FormatCurrency(overview.EBITDA)
 	if err != nil {
@@ -51,6 +51,10 @@ func StockApiGet(c echo.Context) error {
 	if err != nil {
 		return err
 	}
+
+    for _, value := range income.AnnualReports {
+        fmt.Println("total rev: ", value.TotalRevenue)
+    }
 
 	return c.Render(http.StatusOK, "search.html", map[string]interface{}{
 		"symbol":   overview.Symbol,
@@ -70,9 +74,7 @@ func StockApiGet(c echo.Context) error {
 
 func LoadApi(c echo.Context) error {
 	symbol := c.FormValue("search")
-	html := fmt.Sprintf(
-        "<div class=\"loader\" hx-get=\"api/search/%s\" hx-trigger=\"load\" hx-target=\"#stock\"></div>",
-        symbol,
-    )
-	return c.HTML(http.StatusOK, html)
+    return c.Render(http.StatusOK, "loader.html", map[string]interface{}{
+        "symbol": symbol,
+    })
 }
