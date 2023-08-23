@@ -6,8 +6,47 @@ import(
     "io"
     "net/http"
     "stock/internal/api"
+    "strconv"
 )
 
+func FormatCurrency(currency string) (string, error) {
+    if currency == "" {
+        return "0.00", nil
+    }
+	numberRep, err := strconv.ParseFloat(currency, 64)
+	if err != nil {
+        fmt.Println("error parsing currency: ", err)
+		return "", err
+	}
+
+	switch {
+	case numberRep >= 1e12:
+		return fmt.Sprintf("$%.2fT", numberRep/1e11), nil
+	case numberRep >= 1e9:
+		return fmt.Sprintf("$%.2fB", numberRep/1e9), nil
+	case numberRep >= 1e6:
+		return fmt.Sprintf("$%.2fM", numberRep/1e6), nil
+	case numberRep >= 1e3:
+		return fmt.Sprintf("$%.2fk", numberRep/1e3), nil
+	default:
+		return fmt.Sprintf("$%.2f", numberRep), nil
+	}
+}
+
+func FormatPercent(percentString string) (string, error) {
+    if percentString == "" {
+        return "0.00", nil
+    }
+	numberRep, err := strconv.ParseFloat(percentString, 64)
+	if err != nil {
+        fmt.Println("error parsing percent: ", err)
+		return "", err
+	}
+
+    percent := numberRep * 100
+
+    return fmt.Sprintf("%.2f%%", percent), nil
+}
 
 func GetOverview(symbol string, alphavantage string) (api.CompanyOverview, error) {
 	url := fmt.Sprintf("https://www.alphavantage.co/query?function=OVERVIEW&symbol=%s&apikey=%s", symbol, alphavantage)

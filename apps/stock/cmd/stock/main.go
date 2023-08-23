@@ -30,7 +30,8 @@ func main() {
     e.Use(middleware.Logger())
 
     e.Static("/", "static")
-    e.GET("/api/search", routes.StockApiGet)
+    e.GET("/api/load", routes.LoadApi)
+    e.GET("/api/search/:search", routes.StockApiGet)
 
     e.Logger.Fatal(e.Start(":6969"))
 }
