@@ -1,14 +1,14 @@
 package routes
 
 import (
-	"encoding/json"
 	"fmt"
 	"html/template"
 	"io"
 	"net/http"
 	"os"
-	"stock/internal/api"
 	"strings"
+
+	"stock/internal/utils"
 
 	"github.com/labstack/echo/v4"
 )
@@ -28,27 +28,15 @@ func (t *Template) Render(w io.Writer, name string, data interface{}, c echo.Con
 func StockApiGet(c echo.Context) error {
 	alphavantage := os.Getenv("ALPHAVANTAGE")
 	symbol := c.FormValue("search")
-	url := fmt.Sprintf("https://www.alphavantage.co/query?function=OVERVIEW&symbol=%s&apikey=%s", symbol, alphavantage)
 
-	resp, err := http.Get(url)
-	if err != nil {
-		return err
-	}
+    overview, err := utils.GetOverview(symbol, alphavantage)
+    if err != nil {
+        return err
+    }
 
-	defer resp.Body.Close()
-	body, err := io.ReadAll(resp.Body)
-	if err != nil {
-		return err
-	}
+    income, err := utils.GetIncome(symbol, alphavantage)
+    fmt.Println(income.Symbol)
 
-	var overview api.CompanyOverview
-	err = json.Unmarshal(body, &overview)
-	if err != nil {
-		fmt.Println("Error:", err)
-		return err
-	}
-
-	fmt.Println("symbol:", overview.Symbol)
     return c.Render(http.StatusOK, "search.html", map[string]interface{}{
         "symbol": overview.Symbol,
         "name": overview.Name,
