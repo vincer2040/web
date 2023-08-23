@@ -50,11 +50,10 @@ impl ToHtml for Article {
             Some(d) => d,
             None => "no description provided",
         };
-        format!("<li>{}<section><div><p>title: {}</p></div><div><p>author: {}</p></div><div><p>description: {}</p></div><div><a href={}>link</a></div></section></li>",
+        format!("<li>{}<section><div><p>title: {}</p></div><div><p>author: {}</p></div><div><a href={}>link</a></div></section></li>",
             self.source.to_html(),
             self.title,
             author,
-            description,
             self.url,
         )
     }
