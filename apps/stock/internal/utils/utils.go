@@ -1,21 +1,21 @@
 package utils
 
-import(
-    "encoding/json"
-    "fmt"
-    "io"
-    "net/http"
-    "stock/internal/api"
-    "strconv"
+import (
+	"encoding/json"
+	"fmt"
+	"io"
+	"net/http"
+	"stock/internal/api"
+	"strconv"
 )
 
 func FormatCurrency(currency string) (string, error) {
-    if currency == "" {
-        return "0.00", nil
-    }
+	if currency == "" {
+		return "0.00", nil
+	}
 	numberRep, err := strconv.ParseFloat(currency, 64)
 	if err != nil {
-        fmt.Println("error parsing currency: ", err)
+		fmt.Println("error parsing currency: ", err)
 		return "", err
 	}
 
@@ -34,18 +34,18 @@ func FormatCurrency(currency string) (string, error) {
 }
 
 func FormatPercent(percentString string) (string, error) {
-    if percentString == "" {
-        return "0.00", nil
-    }
+	if percentString == "" {
+		return "0.00", nil
+	}
 	numberRep, err := strconv.ParseFloat(percentString, 64)
 	if err != nil {
-        fmt.Println("error parsing percent: ", err)
+		fmt.Println("error parsing percent: ", err)
 		return "", err
 	}
 
-    percent := numberRep * 100
+	percent := numberRep * 100
 
-    return fmt.Sprintf("%.2f%%", percent), nil
+	return fmt.Sprintf("%.2f%%", percent), nil
 }
 
 func GetOverview(symbol string, alphavantage string) (api.CompanyOverview, error) {
@@ -69,7 +69,7 @@ func GetOverview(symbol string, alphavantage string) (api.CompanyOverview, error
 		return api.CompanyOverview{}, err
 	}
 
-    return overview, nil
+	return overview, nil
 }
 
 func GetIncome(symbol string, alphavantage string) (api.IncomeStatement, error) {
@@ -93,6 +93,29 @@ func GetIncome(symbol string, alphavantage string) (api.IncomeStatement, error) 
 		return api.IncomeStatement{}, err
 	}
 
-    return income, nil
+	return income, nil
 }
 
+func GetBalance(symbol string, alphavantage string) (api.BalanceSheet, error) {
+	url := fmt.Sprintf("https://www.alphavantage.co/query?function=BALANCE_SHEET&symbol=%s&apikey=%s", symbol, alphavantage)
+
+	resp, err := http.Get(url)
+	if err != nil {
+		return api.BalanceSheet{}, err
+	}
+
+	defer resp.Body.Close()
+	body, err := io.ReadAll(resp.Body)
+	if err != nil {
+		return api.BalanceSheet{}, err
+	}
+
+	var balance api.BalanceSheet
+	err = json.Unmarshal(body, &balance)
+	if err != nil {
+		fmt.Println("Error:", err)
+		return api.BalanceSheet{}, err
+	}
+
+	return balance, nil
+}

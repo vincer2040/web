@@ -32,6 +32,7 @@ func main() {
     e.Static("/", "public/static")
     e.GET("/api/load", routes.LoadApi)
     e.GET("/search/:search", routes.StockApiGet)
+    e.POST("/googleauth", routes.GoogleAuth)
 
     e.Logger.Fatal(e.Start(":6969"))
 }

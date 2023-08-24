@@ -70,7 +70,7 @@
                                 <h4>Revenue</h4>
                             </section>
                             <section>
-                                {{ range .AnnualReports }}
+                                {{ range .Income }}
                                 <div>
                                     <p>{{ .FiscalDateEnding }}</p>
                                     <p>{{ .TotalRevenue }}</p>
@@ -83,7 +83,7 @@
                                 <h4>Operating Income</h4>
                             </section>
                             <section>
-                                {{ range .AnnualReports }}
+                                {{ range .Income }}
                                 <div>
                                     <p>{{ .FiscalDateEnding }}</p>
                                     <p>{{ .OperatingIncome }}</p>
@@ -96,11 +96,68 @@
                                 <h4>Net Income</h4>
                             </section>
                             <section>
-                                {{ range .AnnualReports }}
+                                {{ range .Income }}
                                 <div>
                                     <p>{{ .FiscalDateEnding }}</p>
                                     <p>{{ .NetIncome }}</p>
                                 </div>
+                                {{ end }}
+                            </section>
+                        </section>
+                    </section>
+                    <section>
+                        <section>
+                            <h3>Balance Sheet</h3>
+                        </section>
+                        <section>
+                            <section>
+                                <h4>Assets</h4>
+                            </section>
+                            <section>
+                                {{ range .Balance }}
+                                    <div>
+                                        <p>{{ .FiscalDateEnding }}</p>
+                                        <p>{{ .TotalAssets }}</p>
+                                    </div>
+                                {{ end }}
+                            </section>
+                        </section>
+                        <section>
+                            <section>
+                                <h4>Cash</h4>
+                            </section>
+                            <section>
+                                {{ range .Balance }}
+                                    <div>
+                                        <p>{{ .FiscalDateEnding }}</p>
+                                        <p>{{ .CashAndCashEquivalentsAtCarryingValue }}</p>
+                                    </div>
+                                {{ end }}
+                            </section>
+                        </section>
+                        <section>
+                            <section>
+                                <h4>Total Liabilities</h4>
+                            </section>
+                            <section>
+                                {{ range .Balance }}
+                                    <div>
+                                        <p>{{ .FiscalDateEnding }}</p>
+                                        <p>{{ .TotalLiabilities }}</p>
+                                    </div>
+                                {{ end }}
+                            </section>
+                        </section>
+                        <section>
+                            <section>
+                                <h4>Shares Outstanding</h4>
+                            </section>
+                            <section>
+                                {{ range .Balance }}
+                                    <div>
+                                        <p>{{ .FiscalDateEnding }}</p>
+                                        <p>{{ .CommonStockSharesOutstanding }}</p>
+                                    </div>
                                 {{ end }}
                             </section>
                         </section>
