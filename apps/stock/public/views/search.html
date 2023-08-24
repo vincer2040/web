@@ -63,15 +63,46 @@
                     </section>
                     <section>
                         <section>
-                            <h3>Revenue</h3>
+                            <h3>Income Statement</h3>
                         </section>
                         <section>
-                            {{ range .AnnualReports }}
-                            <div>
-                                <p>{{ .FiscalDateEnding }}</p>
-                                <p>{{ .TotalRevenue }}</p>
-                            </div>
-                            {{ end }}
+                            <section>
+                                <h4>Revenue</h4>
+                            </section>
+                            <section>
+                                {{ range .AnnualReports }}
+                                <div>
+                                    <p>{{ .FiscalDateEnding }}</p>
+                                    <p>{{ .TotalRevenue }}</p>
+                                </div>
+                                {{ end }}
+                            </section>
+                        </section>
+                        <section>
+                            <section>
+                                <h4>Operating Income</h4>
+                            </section>
+                            <section>
+                                {{ range .AnnualReports }}
+                                <div>
+                                    <p>{{ .FiscalDateEnding }}</p>
+                                    <p>{{ .OperatingIncome }}</p>
+                                </div>
+                                {{ end }}
+                            </section>
+                        </section>
+                        <section>
+                            <section>
+                                <h4>Net Income</h4>
+                            </section>
+                            <section>
+                                {{ range .AnnualReports }}
+                                <div>
+                                    <p>{{ .FiscalDateEnding }}</p>
+                                    <p>{{ .NetIncome }}</p>
+                                </div>
+                                {{ end }}
+                            </section>
                         </section>
                     </section>
                 </section>
