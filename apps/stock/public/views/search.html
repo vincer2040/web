@@ -66,6 +66,14 @@
                     <section>
                         <h3>Revenue</h3>
                     </section>
+                    <section>
+                        {{ range .AnnualReports }}
+                        <div>
+                            <p>{{ .FiscalDateEnding }}</p>
+                            <p>{{ .TotalRevenue }}</p>
+                        </div>
+                        {{ end }}
+                    </section>
                 </section>
             </article>
         </main>

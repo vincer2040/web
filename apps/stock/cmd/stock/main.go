@@ -29,7 +29,7 @@ func main() {
 
     e.Use(middleware.Logger())
 
-    e.Static("/", "static")
+    e.Static("/", "public/static")
     e.GET("/api/load", routes.LoadApi)
     e.GET("/search/:search", routes.StockApiGet)
 

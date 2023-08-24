@@ -52,29 +52,31 @@ func StockApiGet(c echo.Context) error {
 		return err
 	}
 
-    for _, value := range income.AnnualReports {
-        fmt.Println("total rev: ", value.TotalRevenue)
-    }
+	for _, value := range income.AnnualReports {
+		fmt.Println("date ending: ", value.FiscalDateEnding)
+		fmt.Println("total rev: ", value.TotalRevenue)
+	}
 
 	return c.Render(http.StatusOK, "search.html", map[string]interface{}{
-		"symbol":   overview.Symbol,
-		"name":     overview.Name,
-		"sector":   strings.ToLower(overview.Sector),
-		"industry": strings.ToLower(overview.Industry),
-		"address":  strings.ToLower(overview.Address),
-		"mc":       formatedMarketCap,
-		"ebitda":   formatedEbitda,
-		"pe":       overview.PERatio,
-		"book":     overview.BookValue,
-		"dps":      overview.DividendPerShare,
-		"dy":       formatedDivYield,
-		"ete":      overview.EVToEBITDA,
+		"symbol":        overview.Symbol,
+		"name":          overview.Name,
+		"sector":        strings.ToLower(overview.Sector),
+		"industry":      strings.ToLower(overview.Industry),
+		"address":       strings.ToLower(overview.Address),
+		"mc":            formatedMarketCap,
+		"ebitda":        formatedEbitda,
+		"pe":            overview.PERatio,
+		"book":          overview.BookValue,
+		"dps":           overview.DividendPerShare,
+		"dy":            formatedDivYield,
+		"ete":           overview.EVToEBITDA,
+		"AnnualReports": income.AnnualReports,
 	})
 }
 
 func LoadApi(c echo.Context) error {
 	symbol := c.FormValue("search")
-    return c.Render(http.StatusOK, "loader.html", map[string]interface{}{
-        "symbol": symbol,
-    })
+	return c.Render(http.StatusOK, "loader.html", map[string]interface{}{
+		"symbol": symbol,
+	})
 }
