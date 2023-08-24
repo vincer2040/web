@@ -61,18 +61,18 @@
                         <p>Div/Share: {{ index . "dps" }}</p>
                         <p>Div yield: {{ index . "dy" }}</p>
                     </section>
-                </section>
-                <section>
                     <section>
-                        <h3>Revenue</h3>
-                    </section>
-                    <section>
-                        {{ range .AnnualReports }}
-                        <div>
-                            <p>{{ .FiscalDateEnding }}</p>
-                            <p>{{ .TotalRevenue }}</p>
-                        </div>
-                        {{ end }}
+                        <section>
+                            <h3>Revenue</h3>
+                        </section>
+                        <section>
+                            {{ range .AnnualReports }}
+                            <div>
+                                <p>{{ .FiscalDateEnding }}</p>
+                                <p>{{ .TotalRevenue }}</p>
+                            </div>
+                            {{ end }}
+                        </section>
                     </section>
                 </section>
             </article>

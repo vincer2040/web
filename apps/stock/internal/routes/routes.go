@@ -52,11 +52,6 @@ func StockApiGet(c echo.Context) error {
 		return err
 	}
 
-	for _, value := range income.AnnualReports {
-		fmt.Println("date ending: ", value.FiscalDateEnding)
-		fmt.Println("total rev: ", value.TotalRevenue)
-	}
-
 	return c.Render(http.StatusOK, "search.html", map[string]interface{}{
 		"symbol":        overview.Symbol,
 		"name":          overview.Name,
