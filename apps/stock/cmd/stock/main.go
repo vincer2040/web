@@ -33,6 +33,7 @@ func main() {
     e.GET("/api/load", routes.LoadApi)
     e.GET("/search/:search", routes.StockApiGet)
     e.POST("/googleauth", routes.GoogleAuth)
+    e.POST("/email/signup", routes.EmailSignUp)
 
     e.Logger.Fatal(e.Start(":6969"))
 }

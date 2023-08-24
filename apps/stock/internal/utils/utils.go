@@ -7,6 +7,8 @@ import (
 	"net/http"
 	"stock/internal/api"
 	"strconv"
+
+	"golang.org/x/crypto/bcrypt"
 )
 
 func FormatCurrency(currency string) (string, error) {
@@ -118,4 +120,12 @@ func GetBalance(symbol string, alphavantage string) (api.BalanceSheet, error) {
 	}
 
 	return balance, nil
+}
+
+func AuthenticatePassword(pw []byte, hash []byte) bool {
+    err := bcrypt.CompareHashAndPassword(hash, pw)
+    if err != nil {
+        return false
+    }
+    return true
 }

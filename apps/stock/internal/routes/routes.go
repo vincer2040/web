@@ -13,6 +13,7 @@ import (
 	"stock/internal/utils"
 
 	"github.com/labstack/echo/v4"
+	"golang.org/x/crypto/bcrypt"
 	// "google.golang.org/api/oauth2/v2"
 )
 
@@ -115,5 +116,31 @@ func GoogleAuth(c echo.Context) error {
 
     fmt.Println(string(body))
 
+    return c.String(http.StatusOK, "ok")
+}
+
+func EmailSignUp(c echo.Context) error {
+    name := c.FormValue("name")
+    email := c.FormValue("email")
+    pw := c.FormValue("pw")
+    repeat := c.FormValue("repeat")
+
+    if pw != repeat {
+        return c.String(http.StatusOK, "passwords do not match")
+    }
+
+    hashed, err := bcrypt.GenerateFromPassword([]byte(pw), bcrypt.DefaultCost)
+    if err != nil {
+        return err
+    }
+
+    fmt.Println("hashed pw:", hashed)
+
+    err = bcrypt.CompareHashAndPassword(hashed, []byte(pw))
+    if err != nil {
+        return c.String(http.StatusOK, "could not make password secure")
+    }
+
+    fmt.Println(name, email, pw, repeat)
     return c.String(http.StatusOK, "ok")
 }
