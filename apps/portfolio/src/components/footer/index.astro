@@ -1,16 +1,16 @@
 ---
 import Contact from "../contact/index.astro";
-import NavLinks from "../links/navlinks.astro";
+import FooterLinks from "../links/footerLinks.astro";
 ---
 
 
-<footer>
-    <section>
-        <h2>site links</h2>
-        <NavLinks />
+<footer class="fixed left-0 bottom-0 w-full bg-neutral-200">
+    <section class="grid place-items-center">
+        <h2 class="text-2xl">Site Links</h2>
+        <FooterLinks />
     </section>
-    <section>
-        <h2>Contact</h2>
+    <section class="grid place-items-center">
+        <h2 class="text-2xl">Contact</h2>
         <Contact />
     </section>
 </footer>

@@ -4,8 +4,10 @@ import ProjectLinks from "../components/links/projectlinks.astro";
 ---
 
 <Main>
-    <nav>
-        <a href="/projects"><h2>Projects</h2></a>
+    <nav class="grid place-items-center">
+        <a href="/projects">
+            <h2 class="text-2xl underline">Projects</h2>
+        </a>
         <ProjectLinks />
     </nav>
     <slot/>
