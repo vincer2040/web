@@ -3,12 +3,25 @@ import Main from "./main.astro";
 import ProjectLinks from "../components/links/projectlinks.astro";
 ---
 
+<style is:global>
+h2 {
+    font-size: 1.5rem !important;
+    line-height: 2rem;
+}
+h3 {
+    font-size: 1.25rem !important;
+    line-height: 1.75rem;
+}
+</style>
+
 <Main>
-    <nav class="grid place-items-center">
+    <nav class="grid place-items-center bg-neutral-100 py-5">
         <a href="/projects">
             <h2 class="text-2xl underline">Projects</h2>
         </a>
         <ProjectLinks />
     </nav>
-    <slot/>
+    <article class="grid place-items-center">
+        <slot/>
+    </article>
 </Main>

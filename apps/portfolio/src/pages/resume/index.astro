@@ -6,15 +6,34 @@ import Skills from "../../components/resume/skills.md";
 import Experience from "../../components/resume/experience.md";
 ---
 
-<style>
-    h1 {
-        font-size: 1.875rem;
-    }
+<style is:global>
+h1 {
+    font-size: 1.875rem !important;
+    line-height: 2.25rem;
+}
+
+h2 {
+    font-size: 1.5rem !important;
+    line-height: 2rem;
+}
+
 </style>
 
 <Main>
-    <Header />
-    <Education />
-    <Skills />
-    <Experience />
+    <div class="grid place-items-center">
+        <section class="max-w-[80ch]">
+            <section class="grid place-items-center">
+                <Header />
+            </section>
+            <section>
+                <Education />
+            </section>
+            <section>
+                <Skills />
+            </section>
+            <section>
+                <Experience />
+            </section>
+        </section>
+    </div>
 </Main>
