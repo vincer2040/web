@@ -27,3 +27,7 @@ bin
 .turbo
 
 node_modules
+
+public/static/css/style.css
+public/static/main.mjs
+public/static/main.umd.js
