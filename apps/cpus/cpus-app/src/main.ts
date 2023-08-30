@@ -3,13 +3,6 @@ import type { Observer } from "observable";
 
 type Cpus = Array<number>;
 
-type ProcessInfo = {
-    pid: string,
-    name: string,
-};
-
-type Processes = Array<ProcessInfo>;
-
 class CpuSubject extends Subject {
     private _cpus!: Cpus;
     constructor() {
@@ -22,22 +15,6 @@ class CpuSubject extends Subject {
 
     set cpus(cpus: Cpus) {
         this._cpus = cpus;
-        this.notify();
-    }
-}
-
-class ProcessSubject extends Subject {
-    private _processes!: Processes;
-    constructor() {
-        super();
-    }
-
-    get processes(): Processes {
-        return this._processes;
-    }
-
-    set processes(p: Processes) {
-        this._processes = p;
         this.notify();
     }
 }
@@ -94,15 +71,6 @@ class CpuObserver implements Observer {
     }
 }
 
-class ProcessObserver implements Observer {
-    constructor() {}
-
-    update(theChangedObject: ProcessSubject): void {
-        let processes = theChangedObject.processes;
-        console.log(processes);
-    }
-}
-
 function getWsURL(u: string): string {
     let url = new URL(window.location.origin + u);
     url.protocol = url.protocol.replace("http", "ws");
@@ -117,11 +85,8 @@ function main() {
     let cpuUrl = getWsURL("/realtime/cpus");
     let cpuws = createWebSocket(cpuUrl);
     let cpuSubject = new CpuSubject();
-    let processSubject = new ProcessSubject();
     let cpuObserver = new CpuObserver();
-    let processObserver = new ProcessObserver();
     cpuSubject.attach(cpuObserver);
-    processSubject.attach(processObserver);
     cpuws.onmessage = (ev) => {
         let data: Cpus = JSON.parse(ev.data) as Cpus;
         cpuSubject.cpus = data;
