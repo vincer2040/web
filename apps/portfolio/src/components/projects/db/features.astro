@@ -1,0 +1,59 @@
+
+<h3>Features</h3>
+
+<ul class="list-disc pl-5">
+    <li>
+        <h4>Handles multiple concurrent connections via multiplexing</h4>
+        <ul class="list-disc pl-5">
+            <li>
+                <p>Makes use of the epoll interface provided by Linux</p>
+            </li>
+            <li>
+                <p>Implementation of a state machine to dispatch read and write
+                events emitted from the kernal - providing a more high level
+                and easier to work with API</p>
+            </li>
+        </ul>
+    </li>
+    <li>
+        <h4>Binary safe protocol</h4>
+        <ul class="list-disc pl-5">
+            <li>
+                <p>All messages must include a command that the server performs</p>
+            </li>
+            <li>
+                <p>The protocol used requires a type byte before the value</p>
+            </li>
+            <li>
+                <p>The length of arrays and strings must be after the type byte and before
+                the value - the lengths are also used to ensure that the full message was read
+                before executing the command</p>
+            </li>
+        </ul>
+    </li>
+    <li>
+        <h4>Store key-value pairs in an effiecient hash table</h4>
+        <ul class="list-disc pl-5">
+            <li>
+                <p>Uses a bucket approach - the buckets are dynamic arrays rather
+                than linked lists</p>
+            </li>
+            <li>
+                <p>A resizable hashtable is used to ensure an effiecient load-factor</p>
+            </li>
+            <li>
+                <p>Siphash 1-2 algorithm used to hash the keys</p>
+            </li>
+        </ul>
+    </li>
+    <li>
+        <h4>Ability to categorize data with namespaced collections</h4>
+        <ul class="list-disc pl-5">
+            <li>
+                <p>Uses a hashtable where the key is the name of the namespace and the
+                value is a structure containing a hashtable and stack</p>
+            </li>
+        </ul>
+    </li>
+</ul>
+

@@ -11,6 +11,17 @@ h2 {
 h3 {
     font-size: 1.25rem !important;
     line-height: 1.75rem;
+    font-weight: bold !important;
+}
+pre {
+    padding: 1.5rem;
+    border-radius: .375rem;
+    margin: 1rem 0 !important;
+    white-space: pre-wrap;
+    white-space: moz-pre-wrap;
+    white-space: -pre-wrap;
+    white-space: -o-pre-wrap;
+    word-wrap: break-word;
 }
 </style>
 
@@ -21,7 +32,7 @@ h3 {
         </a>
         <ProjectLinks />
     </nav>
-    <article class="grid place-items-center">
+    <article class="grid place-items-center py-5 px-5 md:px-0">
         <slot/>
     </article>
 </Main>

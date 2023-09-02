@@ -1,7 +1,18 @@
----
----
+<style>
+.open .bg-gray-600:nth-child(1) {
+    transform: rotate(45deg) translate(2px, 1px);
+}
 
-<section class="grow">
+.open .bg-gray-600:nth-child(2) {
+    opacity: 0;
+}
+
+.open .bg-gray-600:nth-child(3) {
+    transform: rotate(-45deg) translate(2px, -1px);
+}
+</style>
+
+<section class="grow hidden sm:block">
     <ul class="flex items-center justify-center">
         <li class="px-5">
             <a href="/about" class="text-2xl underline">about me</a>
@@ -14,3 +25,26 @@
         </li>
     </ul>
 </section>
+
+<section class="grow flex items-center justify-end sm:hidden">
+    <div class="w-6 h-6 flex flex-col justify-between cursor-pointer" id="hamburger">
+        <span class="bg-gray-600 h-1 w-full transition-transform duration-300 transform origin-center"></span>
+        <span class="bg-gray-600 h-1 w-full transition-opacity duration-300"></span>
+        <span class="bg-gray-600 h-1 w-full transition-transform duration-300 transform origin-center"></span>
+    </div>
+</section>
+
+<section class="hidden absolute end-0 top-[75px] bg-neutral-300 w-full" id="small-nav">
+    <ul class="flex flex-col items-center justify-center">
+        <li class="px-5">
+            <a href="/about" class="text-2xl underline">about me</a>
+        </li>
+        <li class="px-5">
+            <a href="/resume" class="text-2xl underline">resume</a>
+        </li>
+        <li class="px-5">
+            <a href="/projects" class="text-2xl underline">projects</a>
+        </li>
+    </ul>
+</section>
+
