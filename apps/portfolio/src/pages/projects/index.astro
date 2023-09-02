@@ -1,7 +1,80 @@
 ---
 import Main from "../../layouts/main.astro";
-import ProjectsLayout from "../../layouts/projects.astro";
 ---
 
-<ProjectsLayout />
 
+<Main>
+    <section class="grid place-items-center py-3">
+        <h2 class="text-2xl">Projects</h2>
+    </section>
+    <section class="grid place-items-center">
+        <nav>
+            <ul class="text-xl grid md:grid-cols-4 gap-5 p-4">
+                <li class="bg-neutral-100 rounded-md p-2">
+                    <div class="grid place-items-center">
+                        <a class="underline" href="/projects/db">lexiDB</a>
+                    </div>
+                    <div class="grid place-items-center">
+                        <p>An in-memory data structure database written in C</p>
+                    </div>
+                </li>
+                <li class="bg-neutral-100 rounded-md p-2">
+                    <div class="grid place-items-center">
+                        <a class="underline" href="/projects/interpreter">interpreter</a>
+                    </div>
+                    <div class="grid place-items-center">
+                        <p>An interpreter written in C</p>
+                    </div>
+                </li>
+                <li class="bg-neutral-100 rounded-md p-2">
+                    <div class="grid place-items-center">
+                        <a class="underline" href="/projects/vstr">vstr</a>
+                    </div>
+                    <div class="grid place-items-center">
+                        <p>A string implementation in C</p>
+                    </div>
+                </li>
+                <li class="bg-neutral-100 rounded-md p-2">
+                    <div class="grid place-items-center">
+                        <a class="underline" href="/projects/diety">diety</a>
+                    </div>
+                    <div class="grid place-items-center">
+                        <p>A CLI for scaffolding projects</p>
+                    </div>
+                </li>
+                <li class="bg-neutral-100 rounded-md p-2">
+                    <div class="grid place-items-center">
+                        <a class="underline" href="/projects/cpu-monitor">CPU monitor</a>
+                    </div>
+                    <div class="grid place-items-center">
+                        <p>A mini htop implementation in the browser</p>
+                    </div>
+                </li>
+                <li class="bg-neutral-100 rounded-md p-2">
+                    <div class="grid place-items-center">
+                        <a class="underline" href="/projects/news-app">News App</a>
+                    </div>
+                    <div class="grid place-items-center">
+                        <p>A web app for getting news from multiple sources</p>
+                    </div>
+                </li>
+                <li class="bg-neutral-100 rounded-md p-2">
+                    <div class="grid place-items-center">
+                        <a class="underline" href="/projects/stock-app">Stock App</a>
+                    </div>
+                    <div class="grid place-items-center">
+                        <p>A web app for researching stocks</p>
+                    </div>
+                </li>
+                <li class="bg-neutral-100 rounded-md p-2">
+                    <div class="grid place-items-center">
+                        <a class="underline" href="/projects/router">Router</a>
+                    </div>
+                    <div class="grid place-items-center">
+                        <p>A router implementation for web apps</p>
+                    </div>
+                </li>
+            </ul>
+        </nav>
+    </section>
+</Main>
