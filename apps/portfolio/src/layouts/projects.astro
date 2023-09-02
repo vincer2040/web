@@ -23,6 +23,9 @@ pre {
     white-space: -o-pre-wrap;
     word-wrap: break-word;
 }
+:not(li) > p {
+    text-indent: 20px !important;
+}
 </style>
 
 <Main>
@@ -32,7 +35,9 @@ pre {
         </a>
         <ProjectLinks />
     </nav>
-    <article class="grid place-items-center py-5 px-5 md:px-0">
-        <slot/>
+    <article class="flex flex-col items-center py-5 px-5 md:px-0">
+        <div>
+            <slot />
+        </div>
     </article>
 </Main>
