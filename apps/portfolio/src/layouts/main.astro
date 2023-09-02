@@ -12,9 +12,9 @@ import Footer from "../components/footer/index.astro";
 		<title>Vince</title>
         <script src="./main.ts"></script>
 	</head>
-	<body>
+	<body class="flex flex-col min-h-screen">
         <Header />
-        <main class="mt-16 py-3">
+        <main class="mt-16 py-3 grow">
             <slot />
         </main>
         <Footer />
