@@ -1,0 +1,37 @@
+<h3>Features</h3>
+
+<ul class="list-disc pl-5">
+    <li>
+        <h4>Binary safe strings</h4>
+        <ul class="list-disc pl-5">
+            <li>
+                <p>Most functions in the string standard library rely on the null
+                terminator, making it difficult to work with strings containing binary
+                data</p>
+            </li>
+            <li>
+                <p>Not relying on the null terminator allows users to insert
+                whatever binary data they'd like in their strings</p>
+            </li>
+        </ul>
+    </li>
+    <li>
+        <h4>Rather than returning a structure to the user, a pointer to the
+        string is returned</h4>
+        <ul class="list-disc pl-5">
+            <li>Allows trivial interaction with the C standard library</li>
+        </ul>
+    </li>
+    <li>
+        <h4>Create formatted strings</h4>
+    </li>
+    <li>
+        <h4>Trivially append strings and characters without having to worry
+        about ensuring the null terminator is not over-written or the buffer is
+        not overflowed</h4>
+    </li>
+    <li>
+        <h4>Get the length of the string without having to rely on a null terminator</h4>
+    </li>
+</ul>
+

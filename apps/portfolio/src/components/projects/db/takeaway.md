@@ -12,18 +12,17 @@ how delecate some servers can be when the client does not
 adhere to the protocol specification.
 
 In the beginning of this project, I had no idea how non-blocking
-architectures worked, or, quite frankly, that they were a thing. I
-had no idea how to handle multiple connections to the server, and
-my solution in the beginning was to use multiple threads,
-This was an extremely naive solution, as the
+architectures worked. I had no idea how to handle multiple connections
+to the server, and my solution in the beginning was to use multiple
+threads. This was an extremely naive solution, as the
 number of availale connections was limited to the number of cores
 on my machine. After some research, I came across APIs such as `select`,
 `poll`, and `epoll`. These interfaces allow their users to handle
-many connections to the server due much more trivially than a
-multi-threaded architecture. I was able to create a state machine
-interface with the `epoll` API, which, indirectly, taught me a lot
-about how other non-blocking architectures, such as node.js, work.
-Consider the following code in node:
+many connections to the server much more trivially than a
+multi-threaded or multi-process architecture. I was able to create a
+state machine interface with the `epoll` API, which, indirectly,
+taught me a lot about how other non-blocking architectures, such as
+node.js, work. Consider the following code in node:
 
 ```js
 import { Socket } from "net";
@@ -42,7 +41,6 @@ this project. Here is a very basic and somewhat contrived example
 usage of the library:
 
 ```c
-
 int sfd = create_tcp_socket();
 
 De* de = de_create(BACKLOG);
@@ -66,9 +64,4 @@ The `de_add_event` function takes the `De` internal data structure, file descrip
 the event type to listen for, in this case, `DE_READ`, a callback function, and
 data that should be passed to the callback function. This is very similar to the
 `on` method in node, but with less syntactic sugar.
-
-
-
-
-
 
