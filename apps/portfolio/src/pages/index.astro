@@ -3,5 +3,31 @@ import Main from "../layouts/main.astro";
 ---
 
 <Main>
-    <h2 class="text-2xl">Portfolio</h2>
+    <article class="grid place-items-center py-20">
+        <section class="flex flex-col items-center bg-neutral-100 max-w-[80ch]">
+            <section class="py-3">
+                <h2 class="text-2xl">Hi, I'm Vince</h2>
+            </section>
+            <section class="text-xl flex flex-col gap-2 p-5 rounded-md">
+                <section>
+                    <p>I enjoy creating software that requires performance and robustness</p>
+                </section>
+                <section>
+                    <nav class="grid place-items-center">
+                        <ul class="grid place-items-center sm:flex">
+                            <li class="my-3 sm:px-5">
+                                <a href="/about/" class="text-xl bg-neutral-200 p-2 rounded-md underline">about me</a>
+                            </li>
+                            <li class="my-3 sm:px-5">
+                                <a href="/resume/" class="text-xl bg-neutral-200 p-2 rounded-md underline">resume</a>
+                            </li>
+                            <li class="my-3 sm:px-5">
+                                <a href="/projects/" class="text-xl bg-neutral-200 p-2 rounded-md underline">projects</a>
+                            </li>
+                        </ul>
+                    </nav>
+                </section>
+            </section>
+        </section>
+    </article>
 </Main>
