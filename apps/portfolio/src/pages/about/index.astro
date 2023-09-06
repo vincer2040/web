@@ -1,7 +1,43 @@
 ---
 import Main from "../../layouts/main.astro";
+import Overview from "../../components/about/overview.md";
+import MeLike from "../../components/about/melike.md";
+import Pde from "../../components/about/pde.md";
 ---
 
+<style is:global>
+h2 {
+    font-size: 1.5rem !important;
+    line-height: 2rem;
+}
+h3 {
+    font-size: 1.25rem !important;
+    line-height: 1.75rem;
+    font-weight: bold !important;
+}
+:not(li) > p {
+    text-indent: 20px !important;
+}
+p > a {
+    color: blue;
+    text-decoration: underline;
+}
+</style>
+
+
 <Main>
-    <h2>About</h2>
+    <article class="flex flex-col items-center py-5 px-5 md:px-0">
+        <section class="grid place-items-center">
+            <h2>About Me</h2>
+        </section>
+        <section class="max-w-[80ch] text-lg">
+            <Overview />
+        </section>
+        <section class="max-w-[80ch] text-lg">
+            <MeLike />
+        </section>
+        <section class="max-w-[80ch] text-lg">
+            <Pde />
+        </section>
+    </article>
 </Main>
