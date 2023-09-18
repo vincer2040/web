@@ -84,8 +84,8 @@ typedef struct {
     enum {
         O_INT,
         O_BOOLEAN,
-        O_FUNCTION,
         O_STRING,
+        O_FUNCTION,
         O_ARRAY,
         O_MAP,
     } type;
@@ -93,6 +93,7 @@ typedef struct {
         int64_t integer;
         bool boolean;
         vstr string;
+        Environment* env;
         struct Vec* array;
         struct Ht* map;
     } data;
