@@ -1,9 +1,30 @@
 <h3>Features</h3>
 
-<ul class="list-disc pl-5 w-full">
+<ul class="list-disc pl-5">
     <li>
-        <h4>
-            View the usage percentage of each CPU core on your machine in real time
-        </h4>
+        <h4>View the usage percentage of each CPU core on your machine in real time</h4>
+        <ul class="list-disc pl-5">
+            <li>
+                <p>Makes use of the sysinfo crate in order to gather information about
+                the systems CPU usage</p>
+            </li>
+            <li>
+                <p>Uses a websocket connection to emit realtime usage of each CPU core</p>
+            </li>
+        </ul>
+    </li>
+    <li>
+        <h4>Asynchronous programming with green threads</h4>
+        <ul class="list-disc pl-5">
+            <li>
+                <p>Spawns a thread at the begging of the program execution that collects the CPU information</p>
+            </li>
+            <li>
+                <p>The spawned thread emits data via a channel</p>
+            </li>
+        </ul>
+    </li>
+    <li>
+        <h4>Observer pattern on the front-end for realtime UI updates</h4>
     </li>
 </ul>
