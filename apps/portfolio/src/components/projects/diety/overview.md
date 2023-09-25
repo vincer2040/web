@@ -1,6 +1,6 @@
 ### Overview
 
-This is a simple cli written in ocaml that scaffolds projects for me. I really enjoy starting
+This is a simple cli written in Ocaml that scaffolds projects for me. I really enjoy starting
 side projects, and I noticed that I am doing a lot of copying and pasting
 of configuration files from previous projects. This cli removes that process,
 and allows me to immedietly start developing the project without having

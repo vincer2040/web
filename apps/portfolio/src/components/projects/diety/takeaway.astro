@@ -1,0 +1,45 @@
+
+<h3>Takeaway</h3>
+
+<section>
+    <p>This project provided me with three main takeways:</p>
+
+    <ol class="list-decimal pl-5">
+        <li>
+            <p>The simple abstractions are often times
+            extremely complex under the hood.</p>
+            <p>This became evident in the first iteration of the project
+            when I was attempting to create a higher level build tool
+            for cmake and a package manager for C and C++. I decided not
+            to go down this route because of the large amount of complexity
+            that it would require without much more benefit than manually
+            installing dependencies and configuring them with cmake. It
+            required a configuration file that specified how to download, build,
+            and link each dependency, and I really wasn't trying to make a bazel clone,
+            as I wanted this CLI to be as simple as possible.</p>
+        </li>
+        <li>
+            <p>Finding a task that can be automated and automating
+            it is extremely valuable.</p>
+            <p>I really felt myself adhering to the unix philosophy of having one
+            tool that does one thing very well. This project saves me quite a bit
+            of time when setting up projects, and I don't have to deal with any
+            "off by one" errors in the configuration. I also know that it will
+            work exactly how I want everytime, which is very valuable to me.</p>
+        </li>
+        <li>
+            <p>Programming in a different paradigm than you're used
+            to can be difficult, but I believe it makes you a better
+            programmer.</p>
+            <p>Ocaml is primarily a functional programming language (rather than
+            object-oriented, such as Java, or precedural, such as C).
+            My personal favorite paradigm of programming is procedural, with structs
+            representing the data and having methods that receive the struct as an argument
+            or that that hang off of them (what Rust does). However, programming in a
+            functional paradigm for this project was very elegent. Not having to deal
+            with multiple states and mutibility really made the project simpler,
+            which was the main goal for this project.</p>
+        </li>
+    </ol>
+</section>
+
