@@ -11,6 +11,6 @@ in memory, etc. This is why I really enjoyed building
 [LexiDB](/projects/db/), which is an in-memory database written
 in C. I got to use different types of data structures (hashmaps,
 hashsets, vectors, queues, stacks, priority-queues, trees,
-and graphs), to represet data. Thinking about the data and how
+and graphs) to represet data. Thinking about the data and how
 it can be efficiently stored and accessed is my favorite thing
 to do in software.

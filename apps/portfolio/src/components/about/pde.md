@@ -1,7 +1,7 @@
 
 ### Development Environment
 
-I develop on linux with neovim as my editor (you can find my
+I develop on linux with neovim as my editor (you can find my neovim
 config [here](https://github.com/vincer2040/init.lua) if
 you're interested in that sort of stuff) and tmux (I don't have
 a config for tmux as I just use the defaults) as my terminal.
@@ -16,9 +16,9 @@ liked that philosophy, and with me being a minimalist at heart, I
 was driven to Arch Linux due to it's minimalistic operating system. Fully
 installing and configuring my system did take some time, but I learned
 a lot about my computer and linux during it. Having to manually set up
-systemD, wifi, data and time, fonts, etc really taught me lot about
-how linux works. Indirectly, this taught me a lot about setting up
-docker containers and servers in the cloud.
+systemD, wifi, a window manager, data and time, fonts, etc
+really taught me lot about how linux works. Indirectly, this
+taught me a lot about setting up docker containers and servers in the cloud.
 
 Before using neovim, I started with vim, and before that, VS code.
 VS code was great when I first started learning how to code - I didn't
