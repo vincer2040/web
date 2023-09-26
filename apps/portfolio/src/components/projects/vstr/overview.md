@@ -1,7 +1,7 @@
 ### Overview
 
 This is a string implementation that is used extensively in
-LexiDB and the interpreter I wrote. This implementation allows me
+[Lexidb](/projects/db/). This implementation allows me
 to trivially interact with strings in C, which can be quite challenging
 sometimes due to the nature of C. This is my favorite library I've created,
 due to its simplicity and robustness.
@@ -23,5 +23,5 @@ typedef struct {
 ```
 
 This implementation is unique to most third-party libraries in that, rather than
-returning the entire structure, it returns just the `data` field, hiding the
-internal header.
+returning the entire structure, it returns just the `data` field, making the header
+internal and "hiding" it from the end user.
