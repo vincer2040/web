@@ -2,10 +2,10 @@
     "name": "stock",
     "version": "1.0.0",
     "description": "",
-    "main": "index.js",
+    "type": "module",
     "scripts": {
-        "css": "npx tailwindcss -i ./css/style.css -o ./public/static/css/style.css --watch",
-        "js": "vite build"
+        "dev": "vite dev",
+        "build": "tsc && vite build"
     },
     "keywords": [],
     "author": "",
@@ -14,7 +14,9 @@
         "router": "workspace:*"
     },
     "devDependencies": {
+        "postcss": "^8.4.23",
         "tailwindcss": "^3.3.2",
+        "typescript": "^5.2.2",
         "vite": "^4.4.9"
     }
 }

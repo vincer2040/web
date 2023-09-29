@@ -1,63 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <title>Stock App</title>
-        <script src="https://unpkg.com/htmx.org@1.9.4"></script>
-        <link rel="stylesheet" href="/css/style.css">
-        <script src="main.umd.js"></script>
-        <style>
-.loader {
-    border: 16px solid #f3f3f3; /* Light grey */
-    border-top: 16px solid #3498db; /* Blue */
-    border-radius: 50%;
-    width: 120px;
-    height: 120px;
-    animation: spin 2s linear infinite;
-}
-
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
-        </style>
-    </head>
-    <body id="stock">
-        <header>
-            <section>
-                <h1>Stock App</h1>
-            </section>
-            <section>
-                <nav>
-                    <ul>
-                        <li>
-                            <a href="/">home</a>
-                        </li>
-                        <li>
-                            <a href="/signup">sign up</a>
-                        </li>
-                    </ul>
-                </nav>
-            </section>
-        </header>
-        <main>
-            <article>
-                <section>
-                    <form
-                        hx-get="/api/load"
-                        hx-target="#load"
-                        >
-                        <section>
-                            <label for="search">enter symbol: </label>
-                            <input type="text" name="search" id="search">
-                        </section>
-                        <section>
-                            <button>search</button>
-                        </section>
-                    </form>
-                </section>
-                <section id="load"></section>
-            </article>
-        </main>
-    </body>
+<head>
+    <meta charset="UTF-8">
+    <title>Stock App</title>
+    <!-- if development -->
+    <script type="module" src="http://localhost:5183/@vite/client"></script>
+    <script type="module" src="http://localhost:5183/src/main.ts"></script>
+    <link rel="stylesheet" href="http://localhost:5183/styles/index.css">
+</head>
+<body>
+    <header class="flex py-5 bg-blue-500">
+        <section class="w-1/3 grid place-items-center">
+            <a href="/">
+                <h1 class="text-2xl text-white">Stock App</h1>
+            </a>
+        </section>
+        <section class="grow grid place-items-center">
+            <ul>
+                <li>
+                    <a href="/">
+                        <p class="bg-blue-600 text-white text-xl
+                        px-2 py-1 rounded-md
+                        transtion duration-300 ease-in-out
+                        hover:bg-blue-800">Sign In</p>
+                    </a>
+                </li>
+            </ul>
+        </section>
+    </header>
+    <main>
+        <h2>Stock app</h2>
+    </main>
+</body>
 </html>
