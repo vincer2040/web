@@ -9,7 +9,12 @@ be a better way to communicate with the server, which is what
 inspired me to create my own protocol. During this process, I quickly
 learned that _nothing_ sent over the network is typesafe, and
 how delecate some servers can be when the client does not
-adhere to the protocol specification.
+adhere to the protocol specification. For parsing the the
+protocol, I implemted a tokenizer and parser method, heavily
+inspired by the parsing methods in the [interpreter](/projects/interpreter/)
+that I wrote. Not only does this method of parsing make it
+much simpler to extract the commands sent to the server, but to
+also add new commands.
 
 In the beginning of this project, I had no idea how non-blocking
 architectures worked. I had no idea how to handle multiple connections
@@ -57,7 +62,6 @@ void server_accept(De* de, int fd, void* client_data, uint32_t flags) {
 }
 
 de_add_event(de, sfd, DE_READ, server_accept, data);
-
 ```
 
 The `de_add_event` function takes the `De` internal data structure, file descriptor,
