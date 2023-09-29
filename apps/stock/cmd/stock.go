@@ -1,6 +1,7 @@
 package main
 
 import (
+	"html/template"
 	"vincer2040/stock/internal/appmiddleware"
 	"vincer2040/stock/internal/db"
 	"vincer2040/stock/internal/routes"
@@ -61,16 +62,24 @@ func main() {
 
 	store := sessions.NewCookieStore([]byte(key))
 
+    t := &routes.Template{
+        Templates: template.Must(template.ParseGlob("public/views/*.html")),
+    }
+
+    e.Renderer = t
+
 	e.Use(appmiddleware.CustomContextMiddleware(mydb, store))
 
 	e.Use(middleware.Logger())
 
 	e.Static("/", "public/static")
-	e.Static("/signin", "public/static/signin")
 
+    e.GET("/signin", routes.SigninGet, appmiddleware.IsAlreadyAuthenticated)
 	e.POST("/auth/email", routes.AuthEmail)
 	e.POST("/signup/email", routes.SignupEmail)
 	e.GET("/me", routes.Me, appmiddleware.IsAuthenticated)
+    e.POST("/logout", routes.Logout)
+    e.GET("/logout", routes.Logout)
 
 	e.Logger.Fatal(e.Start(":6969"))
 }

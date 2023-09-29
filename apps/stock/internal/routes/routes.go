@@ -2,6 +2,8 @@ package routes
 
 import (
 	"database/sql"
+	"html/template"
+	"io"
 	"net/http"
 	"vincer2040/stock/internal/db"
 	"vincer2040/stock/internal/user"
@@ -16,9 +18,36 @@ type CustomContext struct {
 	DB    *sql.DB
 }
 
+type Template struct {
+	Templates *template.Template
+}
+
+func (t *Template) Render(w io.Writer, name string, data interface{}, c echo.Context) error {
+	if viewContext, isMap := data.(map[string]interface{}); isMap {
+		viewContext["reverse"] = c.Echo().Reverse
+	}
+
+	return t.Templates.ExecuteTemplate(w, name, data)
+}
+
+func SigninGet(c echo.Context) error {
+	return c.Render(http.StatusOK, "signin.html", map[string]interface{}{})
+}
+
+func createSession(session *sessions.Session, user *user.User, req *http.Request, res *echo.Response) {
+	session.Values["authenticated"] = true
+	session.Values["first"] = user.First
+	session.Values["email"] = user.Email
+	session.Save(req, res)
+}
+
 func AuthEmail(c echo.Context) error {
 
 	cc := c.(*CustomContext)
+
+	store := cc.Store
+
+	session, _ := store.Get(c.Request(), "auth")
 
 	mydb := cc.DB
 
@@ -40,12 +69,9 @@ func AuthEmail(c echo.Context) error {
 		return c.HTML(http.StatusOK, "wrong email or password")
 	}
 
-	session, _ := cc.Store.Get(c.Request(), "auth")
-	session.Values["authenticated"] = true
-	session.Values["name"] = user.First
-	session.Save(c.Request(), c.Response())
+	createSession(session, user, c.Request(), c.Response())
 
-	return c.HTML(http.StatusOK, "successfully logged in")
+	return c.Redirect(http.StatusSeeOther, "/me")
 }
 
 func SignupEmail(c echo.Context) error {
@@ -81,11 +107,30 @@ func Me(c echo.Context) error {
 
 	session, _ := store.Get(c.Request(), "auth")
 
-	name, ok := session.Values["name"].(string)
+	first, ok := session.Values["first"].(string)
+	email, ok := session.Values["email"].(string)
 
 	if !ok {
 		return c.HTML(http.StatusOK, "no name")
 	}
 
-	return c.HTML(http.StatusOK, name)
+	return c.Render(http.StatusOK, "me.html", map[string]interface{}{
+		"name":  first,
+		"email": email,
+	})
+}
+
+func Logout(c echo.Context) error {
+    cc := c.(*CustomContext)
+
+    store := cc.Store
+	session, _ := store.Get(c.Request(), "auth")
+
+    session.Values["authenticated"] = false;
+    session.Values["name"] = nil;
+    session.Values["email"] = nil;
+
+    session.Save(c.Request(), c.Response())
+
+	return c.Render(http.StatusOK, "logout.html", map[string]interface{}{})
 }

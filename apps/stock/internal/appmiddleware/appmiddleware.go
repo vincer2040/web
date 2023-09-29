@@ -34,3 +34,16 @@ func IsAuthenticated(next echo.HandlerFunc) echo.HandlerFunc {
 		return next(c)
 	}
 }
+
+func IsAlreadyAuthenticated(next echo.HandlerFunc) echo.HandlerFunc {
+	return func(c echo.Context) error {
+		cc := c.(*routes.CustomContext)
+		store := cc.Store
+		session, _ := store.Get(c.Request(), "auth")
+		authenticated, ok := session.Values["authenticated"].(bool)
+		if ok && authenticated == true {
+			return c.Redirect(http.StatusSeeOther, "/me")
+		}
+		return next(c)
+	}
+}
