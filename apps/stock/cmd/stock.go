@@ -7,12 +7,9 @@ import (
 	"vincer2040/stock/internal/routes"
 	"vincer2040/stock/internal/util"
 
-	// "github.com/gorilla/sessions"
 	"github.com/gorilla/sessions"
 	_ "github.com/libsql/libsql-client-go/libsql"
 	_ "modernc.org/sqlite"
-
-	// "github.com/joho/godotenv"
 
 	"database/sql"
 	"fmt"
@@ -73,6 +70,7 @@ func main() {
 	e.Use(middleware.Logger())
 
 	e.Static("/", "public/static")
+    e.Static("/signup", "public/static/signup")
 
     e.GET("/signin", routes.SigninGet, appmiddleware.IsAlreadyAuthenticated)
 	e.POST("/auth/email", routes.AuthEmail)

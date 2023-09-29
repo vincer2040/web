@@ -7,8 +7,6 @@ import (
 	"os"
 	"vincer2040/stock/internal/user"
 
-	// "sync"
-
 	_ "github.com/libsql/libsql-client-go/libsql"
 	_ "modernc.org/sqlite"
 )
