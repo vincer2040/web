@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Stock App</title>
+    <!-- if development -->
+    <script type="module" src="http://localhost:5183/@vite/client"></script>
+    <script src="https://unpkg.com/htmx.org@1.9.6"></script>
+    <link rel="stylesheet" href="http://localhost:5183/styles/index.css">
+</head>
+<body>
+    <main class="grid place-items-center h-screen bg-gray-200">
+        <section class="flex flex-col items-center bg-white px-16 py-5 rounded-md">
+            <section>
+                <h1 class="text-xl">Sign up</h1>
+            </section>
+            <section>
+                <form hx-post="/signup/email" class="flex flex-col gap-3">
+                    <section class="flex flex-col gap-1">
+                        <label class="text-lg" for="first-name">first name:</label>
+                        <input
+                            type="text" id="first-name" name="first-name" placeholder="john" required
+                            class="text-lg border-2 border-black rounded-md px-2 py-1 truncate">
+                    </section>
+                    <section class="flex flex-col gap-1">
+                        <label class="text-lg" for="first-name">last name:</label>
+                        <input
+                            type="text" id="last-name" name="last-name" placeholder="smith" required
+                            class="text-lg border-2 border-black rounded-md px-2 py-1 truncate">
+                    </section>
+                    <section class="flex flex-col gap-1">
+                        <label class="text-lg" for="email">email:</label>
+                        <input
+                            type="email" id="email" name="email" placeholder="example@example.com" required
+                            class="text-lg border-2 border-black rounded-md px-2 py-1 truncate">
+                    </section>
+                    <section class="flex flex-col gap-1">
+                        <label class="text-lg" for="password">password:</label>
+                        <input
+                            type="password" id="password" name="password" required
+                            class="text-lg border-2 border-black rounded-md px-2 py-1 truncate">
+                    </section>
+                    <section class="flex flex-col gap-1">
+                        <label class="text-lg" for="repeat-password">repeat password:</label>
+                        <input
+                            type="password" id="repeat-password" name="repeat-password" required
+                            class="text-lg border-2 border-black rounded-md px-2 py-1 truncate">
+                    </section>
+                    <section class="grid place-items-center">
+                        <button class="bg-blue-600 text-lg text-white
+                            px-2 py-1 rounded-md
+                            transition duration-300 ease-in-out
+                            hover:bg-blue-800">Sign up</button>
+                    </section>
+                    <nav hx-boost="true">
+                        <section class="flex items-center gap-1">
+                            <p class="text-lg">Already have an account?</p>
+                            <a href="/signin">
+                                <p class="text-lg text-blue-600">sign in</p>
+                            </a>
+                        </section>
+                        <a href="/">
+                            <p class="text-lg text-blue-600">home</p>
+                        </a>
+                    </nav>
+                </form>
+            </section>
+        </section>
+    </main>
+</body>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Stock App</title>
+    <!-- if development -->
+    <script type="module" src="http://localhost:5183/@vite/client"></script>
+    <script src="https://unpkg.com/htmx.org@1.9.6"></script>
+    <link rel="stylesheet" href="http://localhost:5183/styles/index.css">
+</head>
+<body>
+    <main class="grid place-items-center h-screen bg-gray-200">
+        <section class="flex flex-col items-center bg-white px-16 py-5 rounded-md">
+            <section>
+                <h1 class="text-2xl">Sign in</h1>
+            </section>
+            <section>
+                <form hx-post="/auth/email" class="flex flex-col gap-4">
+                    <section class="flex flex-col gap-1">
+                        <label class="text-xl" for="email">email:</label>
+                        <input
+                            type="email" id="email" name="email" placeholder="example@example.com" required
+                            class="text-xl border-2 border-black rounded-md px-2 py-1 truncate">
+                    </section>
+                    <section class="flex flex-col gap-1">
+                        <label class="text-xl" for="password">password:</label>
+                        <input
+                            type="password" id="password" name="password" required
+                            class="text-xl border-2 border-black rounded-md px-2 py-1 truncate">
+                    </section>
+                    <section class="grid place-items-center py-5">
+                        <button class="bg-blue-600 text-xl text-white
+                            px-3 py-2 rounded-md
+                            transition duration-300 ease-in-out
+                            hover:bg-blue-800">Sign in</button>
+                    </section>
+                    <nav hx-boost="true">
+                        <section class="flex items-center gap-1">
+                            <p class="text-lg">Don't have an account?</p>
+                            <a href="/signup">
+                                <p class="text-lg text-blue-600">sign up</p>
+                            </a>
+                        </section>
+                        <a href="/">
+                            <p class="text-lg text-blue-600">home</p>
+                        </a>
+                    </nav>
+                </form>
+            </section>
+        </section>
+    </main>
+</body>
+</html>
