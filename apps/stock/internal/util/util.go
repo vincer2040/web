@@ -25,3 +25,4 @@ func ShouldResetUserTable(args []string) bool {
 
 	return should
 }
+

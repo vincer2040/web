@@ -59,25 +59,26 @@ func main() {
 
 	store := sessions.NewCookieStore([]byte(key))
 
-    t := &routes.Template{
-        Templates: template.Must(template.ParseGlob("public/views/*.html")),
-    }
+	t := &routes.Template{
+		Templates: template.Must(template.ParseGlob("public/views/*.html")),
+	}
 
-    e.Renderer = t
+	e.Renderer = t
 
 	e.Use(appmiddleware.CustomContextMiddleware(mydb, store))
 
 	e.Use(middleware.Logger())
 
 	e.Static("/", "public/static")
-    e.Static("/signup", "public/static/signup")
+	e.Static("/signup", "public/static/signup")
 
-    e.GET("/signin", routes.SigninGet, appmiddleware.IsAlreadyAuthenticated)
+	e.GET("/signin", routes.SigninGet, appmiddleware.IsAlreadyAuthenticated)
 	e.POST("/auth/email", routes.AuthEmail)
 	e.POST("/signup/email", routes.SignupEmail)
 	e.GET("/me", routes.Me, appmiddleware.IsAuthenticated)
-    e.POST("/logout", routes.Logout)
-    e.GET("/logout", routes.Logout)
+	e.POST("/logout", routes.Logout)
+	e.GET("/logout", routes.Logout)
+    e.GET("/search", routes.SearchGet, /*appmiddleware.IsAuthenticated*/)
 
 	e.Logger.Fatal(e.Start(":6969"))
 }
