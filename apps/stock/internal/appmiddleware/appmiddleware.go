@@ -9,13 +9,16 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
-func CustomContextMiddleware(db *sql.DB, store *sessions.CookieStore) echo.MiddlewareFunc {
+func CustomContextMiddleware(db *sql.DB, store *sessions.CookieStore, tickers []string, names []string, alphavantage string) echo.MiddlewareFunc {
 	return func(next echo.HandlerFunc) echo.HandlerFunc {
 		return func(c echo.Context) error {
 			cc := &routes.CustomContext{
-				Context: c,
-				Store:   store,
-				DB:      db,
+				Context:      c,
+				Store:        store,
+				DB:           db,
+				Symbols:      tickers,
+				Names:        names,
+				AlphaVantage: alphavantage,
 			}
 			return next(cc)
 		}

@@ -8,6 +8,7 @@ import (
 	"vincer2040/stock/internal/util"
 
 	"github.com/gorilla/sessions"
+	"github.com/joho/godotenv"
 	_ "github.com/libsql/libsql-client-go/libsql"
 	_ "modernc.org/sqlite"
 
@@ -22,6 +23,16 @@ import (
 func main() {
 	e := echo.New()
 	var dbUrl = "file:mydb/stock.db"
+
+	err := godotenv.Load()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "failed to load .env %s\n", err)
+		os.Exit(1)
+	}
+
+	alphavantageKey := os.Getenv("ALPHA_VANTAGE")
+
+	symbols, names := util.GetCompanyTickers()
 
 	mydb, err := sql.Open("libsql", dbUrl)
 	if err != nil {
@@ -65,7 +76,7 @@ func main() {
 
 	e.Renderer = t
 
-	e.Use(appmiddleware.CustomContextMiddleware(mydb, store))
+	e.Use(appmiddleware.CustomContextMiddleware(mydb, store, symbols, names, alphavantageKey))
 
 	e.Use(middleware.Logger())
 
@@ -78,7 +89,9 @@ func main() {
 	e.GET("/me", routes.Me, appmiddleware.IsAuthenticated)
 	e.POST("/logout", routes.Logout)
 	e.GET("/logout", routes.Logout)
-    e.GET("/search", routes.SearchGet, /*appmiddleware.IsAuthenticated*/)
+	e.GET("/search", routes.SearchGet /*appmiddleware.IsAuthenticated*/)
+	e.POST("/search", routes.SearchPost)
+	e.GET("/search/:symbol", routes.StockGet)
 
 	e.Logger.Fatal(e.Start(":6969"))
 }
