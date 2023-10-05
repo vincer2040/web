@@ -104,6 +104,53 @@
                         </div>
                     </div>
                 </div>
+                <div>
+                    <div>
+                        <h3>Income Statements</h3>
+                    </div>
+                    <div>
+                        <div class="flex gap-2">
+                            <div>
+                                <h3>Year</h3>
+                                <div>
+                                    {{ range .Dates }}
+                                    <p>{{ . }}</p>
+                                    {{ end }}
+                                </div>
+                            </div>
+                            <div>
+                                <h3>Total Revenue</h3>
+                                <div>
+                                    <div>
+                                        {{ range .Revenues }}
+                                        <p>{{ . }}</p>
+                                        {{ end }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <h3>Operating Income</h3>
+                                <div>
+                                    <div>
+                                        {{ range .OperatingIncomes }}
+                                        <p>{{ . }}</p>
+                                        {{ end }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <h3>Net Income</h3>
+                                <div>
+                                    <div>
+                                        {{ range .NetIncomes }}
+                                        <p>{{ . }}</p>
+                                        {{ end }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </section>
         </article>
     </main>

@@ -59,6 +59,11 @@ func StockGet(c echo.Context) error {
 		return err
 	}
 
+	incomeStatements, err := api.GetIncomeStatements(symbol, apiKey)
+	if err != nil {
+		return err
+	}
+
 	marketCap, err := util.FormatCurrency(overview.MarketCapitalization)
 	if err != nil {
 		return err
@@ -79,6 +84,26 @@ func StockGet(c echo.Context) error {
 		return err
 	}
 
+	dates, err := incomeStatements.ExtractDates()
+	if err != nil {
+		return err
+	}
+
+	revenues, err := incomeStatements.GetTotalRevenues()
+	if err != nil {
+		return err
+	}
+
+	operatingIncomes, err := incomeStatements.GetOperatingIncomes()
+	if err != nil {
+		return err
+	}
+
+	netIncomes, err := incomeStatements.GetNetIncomes()
+	if err != nil {
+		return err
+	}
+
 	return c.Render(http.StatusOK, "stock.html", map[string]interface{}{
 		"Name":              overview.Name,
 		"Sector":            strings.ToLower(overview.Sector),
@@ -91,5 +116,9 @@ func StockGet(c echo.Context) error {
 		"SharesOutstanding": sharesOutstanding,
 		"DivPerShare":       divPerShare,
 		"DivYield":          divYield,
+		"Dates":             dates,
+		"Revenues":          revenues,
+		"OperatingIncomes":  operatingIncomes,
+		"NetIncomes":        netIncomes,
 	})
 }
