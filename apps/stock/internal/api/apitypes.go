@@ -1,5 +1,7 @@
 package api
 
+import "vincer2040/stock/internal/util"
+
 type Overview struct {
 	Symbol                     string
 	AssetType                  string
@@ -82,4 +84,23 @@ type IncomeStatements struct {
 	Symbol           string                `json:"symbol"`
 	AnnualReports    []IncomeStatementItem `json:"annualReports"`
 	QuarterlyReports []IncomeStatementItem `json:"quarterlyReports"`
+}
+
+func (is *IncomeStatements) ExtractDates() ([]int, error) {
+    var dates []int
+
+    for i := range is.AnnualReports {
+        year, err := util.ExtractYear(is.AnnualReports[i].FiscalDateEnding)
+        if err != nil {
+            return nil, err
+        }
+
+        dates = append(dates, *year)
+    }
+
+    for i, j := 0, len(dates)-1; i < j; i, j = i+1, j-1 {
+        dates[i], dates[j] = dates[j], dates[i]
+    }
+
+    return dates, nil
 }
