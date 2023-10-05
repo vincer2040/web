@@ -10,6 +10,7 @@ import (
 	"os"
 	"strconv"
 	"strings"
+	"time"
 )
 
 func GenerateRandomKey(length int) (string, error) {
@@ -146,4 +147,14 @@ func FormatLargeNumber(value string) (*string, error) {
 	res := fmt.Sprintf("%.1f%s", val, suffix)
 
 	return &res, nil
+}
+
+func ExtractYear(value string) (*int, error) {
+    parsedDate, err := time.Parse("2006-01-02", value)
+    if err != nil {
+        return nil, err
+    }
+
+    year := parsedDate.Year()
+    return &year, nil
 }
