@@ -110,12 +110,12 @@ func (is *IncomeStatements) GetTotalRevenues() ([]string, error) {
 
 	for i := range is.AnnualReports {
 		rev := is.AnnualReports[i].TotalRevenue
-		formatted, err := util.FormatCurrency(rev)
-		if err != nil {
-			return nil, err
-		}
+		// formatted, err := util.FormatCurrency(rev)
+		// if err != nil {
+		// 	return nil, err
+		// }
 
-		revenues = append(revenues, *formatted)
+		revenues = append(revenues, rev)
 	}
 
 	for i, j := 0, len(revenues)-1; i < j; i, j = i+1, j-1 {
@@ -129,12 +129,12 @@ func (is *IncomeStatements) GetOperatingIncomes() ([]string, error) {
 
 	for i := range is.AnnualReports {
 		rev := is.AnnualReports[i].OperatingIncome
-		formatted, err := util.FormatCurrency(rev)
-		if err != nil {
-			return nil, err
-		}
+		// formatted, err := util.FormatCurrency(rev)
+		// if err != nil {
+		// 	return nil, err
+		// }
 
-		operatingIncomes = append(operatingIncomes, *formatted)
+		operatingIncomes = append(operatingIncomes, rev)
 	}
 
 	for i, j := 0, len(operatingIncomes)-1; i < j; i, j = i+1, j-1 {
@@ -148,12 +148,12 @@ func (is *IncomeStatements) GetNetIncomes() ([]string, error) {
 
 	for i := range is.AnnualReports {
 		rev := is.AnnualReports[i].NetIncome
-		formatted, err := util.FormatCurrency(rev)
-		if err != nil {
-			return nil, err
-		}
+		// formatted, err := util.FormatCurrency(rev)
+		// if err != nil {
+		// 	return nil, err
+		// }
 
-		netIncomes = append(netIncomes, *formatted)
+		netIncomes = append(netIncomes, rev)
 	}
 
 	for i, j := 0, len(netIncomes)-1; i < j; i, j = i+1, j-1 {

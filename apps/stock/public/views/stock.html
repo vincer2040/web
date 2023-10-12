@@ -2,10 +2,11 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Search</title>
+    <title>{{ index . "Name" }}</title>
     <!-- if development -->
     <script type="module" src="http://localhost:5183/@vite/client"></script>
     <script src="https://unpkg.com/htmx.org@1.9.6"></script>
+    <script src="https://cdn.plot.ly/plotly-2.26.0.min.js" charset="utf-8"></script>
     <link rel="stylesheet" href="http://localhost:5183/styles/index.css">
 </head>
 <body id="top">
@@ -104,55 +105,71 @@
                         </div>
                     </div>
                 </div>
-                <div class="flex flex-col items-center">
-                    <div>
+                <div class="flex flex-col">
+                    <div class="flex items-center justify-center">
                         <h3 class="text-lg">Income Statements</h3>
                     </div>
-                    <div>
-                        <div class="flex gap-2 text-lg">
-                            <div>
-                                <h3>Year</h3>
-                                <div>
-                                    {{ range .Dates }}
-                                    <p>{{ . }}</p>
-                                    {{ end }}
-                                </div>
-                            </div>
-                            <div>
-                                <h3>Total Revenue</h3>
-                                <div>
-                                    <div>
-                                        {{ range .Revenues }}
-                                        <p>{{ . }}</p>
-                                        {{ end }}
-                                    </div>
-                                </div>
-                            </div>
-                            <div>
-                                <h3>Operating Income</h3>
-                                <div>
-                                    <div>
-                                        {{ range .OperatingIncomes }}
-                                        <p>{{ . }}</p>
-                                        {{ end }}
-                                    </div>
-                                </div>
-                            </div>
-                            <div>
-                                <h3>Net Income</h3>
-                                <div>
-                                    <div>
-                                        {{ range .NetIncomes }}
-                                        <p>{{ . }}</p>
-                                        {{ end }}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="flex justify-around">
+                        <div id="revenue" style="width: 600px"></div>
+                        <div id="operating-income" style="width: 600px"></div>
+                        <div id="net-income" style="width: 600px"></div>
                     </div>
                 </div>
             </section>
         </article>
     </main>
+    <script>
+        const revenueChart = document.getElementById("revenue");
+        const operatingIncomeChart = document.getElementById("operating-income");
+        const netIncomeChart = document.getElementById("net-income");
+        const revenueData = [
+            {
+                x:[
+                    {{ range .Dates }}
+                    {{ . }},
+                    {{ end }}
+                ],
+                y: [
+                    {{ range .Revenues }}
+                    parseInt({{ . }}),
+                    {{ end }}
+                ],
+                type: "bar",
+            }
+        ];
+        const operatingIncomeData = [
+            {
+                x:[
+                    {{ range .Dates }}
+                    {{ . }},
+                    {{ end }}
+                ],
+                y: [
+                    {{ range .OperatingIncomes }}
+                    parseInt({{ . }}),
+                    {{ end }}
+                ],
+                type: "bar",
+            }
+        ];
+        const netIncomeData = [
+            {
+                x:[
+                    {{ range .Dates }}
+                    {{ . }},
+                    {{ end }}
+                ],
+                y: [
+                    {{ range .NetIncomes }}
+                    parseInt({{ . }}),
+                    {{ end }}
+                ],
+                type: "bar",
+            }
+        ];
+        Plotly.newPlot(revenueChart, revenueData, { title: "Total Revenue" });
+        Plotly.newPlot(operatingIncomeChart, operatingIncomeData, { title: "Operating Income" });
+        Plotly.newPlot(netIncomeChart, netIncomeData, { title: "Net Income" });
+    </script>
 </body>
 </html>
