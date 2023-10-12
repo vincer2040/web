@@ -119,10 +119,10 @@
         </article>
     </main>
     <script>
-        const revenueChart = document.getElementById("revenue");
-        const operatingIncomeChart = document.getElementById("operating-income");
-        const netIncomeChart = document.getElementById("net-income");
-        const revenueData = [
+        revenueChart = document.getElementById("revenue");
+        operatingIncomeChart = document.getElementById("operating-income");
+        netIncomeChart = document.getElementById("net-income");
+        revenueData = [
             {
                 x:[
                     {{ range .Dates }}
@@ -137,7 +137,7 @@
                 type: "bar",
             }
         ];
-        const operatingIncomeData = [
+        operatingIncomeData = [
             {
                 x:[
                     {{ range .Dates }}
@@ -152,7 +152,7 @@
                 type: "bar",
             }
         ];
-        const netIncomeData = [
+        netIncomeData = [
             {
                 x:[
                     {{ range .Dates }}
