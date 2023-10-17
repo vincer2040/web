@@ -158,3 +158,15 @@ func ExtractYear(value string) (*int, error) {
     year := parsedDate.Year()
     return &year, nil
 }
+
+func Reverse(arr []string) {
+	for i, j := 0, len(arr)-1; i < j; i, j = i+1, j-1 {
+		arr[i], arr[j] = arr[j], arr[i]
+	}
+}
+
+func ReverseInts(arr []int) {
+	for i, j := 0, len(arr)-1; i < j; i, j = i+1, j-1 {
+		arr[i], arr[j] = arr[j], arr[i]
+	}
+}

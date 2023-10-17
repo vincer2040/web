@@ -98,68 +98,47 @@ func (is *IncomeStatements) ExtractDates() ([]int, error) {
 		dates = append(dates, *year)
 	}
 
-	for i, j := 0, len(dates)-1; i < j; i, j = i+1, j-1 {
-		dates[i], dates[j] = dates[j], dates[i]
-	}
-
+    util.ReverseInts(dates)
 	return dates, nil
 }
 
-func (is *IncomeStatements) GetTotalRevenues() ([]string, error) {
+func (is *IncomeStatements) GetTotalRevenues() []string {
 	var revenues []string
 
 	for i := range is.AnnualReports {
 		rev := is.AnnualReports[i].TotalRevenue
-		// formatted, err := util.FormatCurrency(rev)
-		// if err != nil {
-		// 	return nil, err
-		// }
 
 		revenues = append(revenues, rev)
 	}
 
-	for i, j := 0, len(revenues)-1; i < j; i, j = i+1, j-1 {
-		revenues[i], revenues[j] = revenues[j], revenues[i]
-	}
-	return revenues, nil
+    util.Reverse(revenues)
+	return revenues
 }
 
-func (is *IncomeStatements) GetOperatingIncomes() ([]string, error) {
+func (is *IncomeStatements) GetOperatingIncomes() []string {
 	var operatingIncomes []string
 
 	for i := range is.AnnualReports {
 		rev := is.AnnualReports[i].OperatingIncome
-		// formatted, err := util.FormatCurrency(rev)
-		// if err != nil {
-		// 	return nil, err
-		// }
 
 		operatingIncomes = append(operatingIncomes, rev)
 	}
 
-	for i, j := 0, len(operatingIncomes)-1; i < j; i, j = i+1, j-1 {
-		operatingIncomes[i], operatingIncomes[j] = operatingIncomes[j], operatingIncomes[i]
-	}
-	return operatingIncomes, nil
+    util.Reverse(operatingIncomes)
+	return operatingIncomes
 }
 
-func (is *IncomeStatements) GetNetIncomes() ([]string, error) {
+func (is *IncomeStatements) GetNetIncomes() []string {
 	var netIncomes []string
 
 	for i := range is.AnnualReports {
 		rev := is.AnnualReports[i].NetIncome
-		// formatted, err := util.FormatCurrency(rev)
-		// if err != nil {
-		// 	return nil, err
-		// }
 
 		netIncomes = append(netIncomes, rev)
 	}
 
-	for i, j := 0, len(netIncomes)-1; i < j; i, j = i+1, j-1 {
-		netIncomes[i], netIncomes[j] = netIncomes[j], netIncomes[i]
-	}
-	return netIncomes, nil
+    util.Reverse(netIncomes)
+	return netIncomes
 }
 
 type BalaceSheetItem struct {
@@ -207,4 +186,40 @@ type BalanceSheet struct {
 	Symbol           string            `json:"symbol"`
 	AnnualReports    []BalaceSheetItem `json:"annualReports"`
 	QuarterlyReports []BalaceSheetItem `json:"quarterlyReports"`
+}
+
+func (bs *BalanceSheet) GetCash() []string {
+    var cash []string
+
+    for i := range bs.AnnualReports {
+        c := bs.AnnualReports[i].CashAndCashEquivalentsAtCarryingValue
+        cash = append(cash, c)
+    }
+
+    util.Reverse(cash)
+    return cash
+}
+
+func (bs *BalanceSheet) GetTotalAssets() []string {
+    var assets []string
+
+    for i := range bs.AnnualReports {
+        a := bs.AnnualReports[i].TotalAssets
+        assets = append(assets, a)
+    }
+
+    util.Reverse(assets)
+    return assets
+}
+
+func (bs *BalanceSheet) GetLongTermDebt() []string {
+    var longTermDebt []string
+
+    for i := range bs.AnnualReports {
+        ltd := bs.AnnualReports[i].LongTermDebt
+        longTermDebt = append(longTermDebt, ltd)
+    }
+
+    util.Reverse(longTermDebt)
+    return longTermDebt
 }
