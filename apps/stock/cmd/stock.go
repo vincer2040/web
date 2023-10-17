@@ -22,7 +22,6 @@ import (
 
 func main() {
 	e := echo.New()
-	var dbUrl = "file:mydb/stock.db"
 
 	err := godotenv.Load()
 	if err != nil {
@@ -31,6 +30,7 @@ func main() {
 	}
 
 	alphavantageKey := os.Getenv("ALPHA_VANTAGE")
+    dbUrl := os.Getenv("DB_URL")
 
 	symbols, names := util.GetCompanyTickers()
 
