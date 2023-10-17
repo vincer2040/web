@@ -114,6 +114,14 @@
                         <div id="operating-income" style="width: 600px"></div>
                         <div id="net-income" style="width: 600px"></div>
                     </div>
+                    <div class="flex items-center justify-center">
+                        <h3 class="text-lg">Balance Sheet</h3>
+                    </div>
+                    <div class="flex justify-around">
+                        <div id="cash" style="width: 600px"></div>
+                        <div id="total-assets" style="width: 600px"></div>
+                        <div id="long-term-debt" style="width: 600px"></div>
+                    </div>
                 </div>
             </section>
         </article>
@@ -122,6 +130,9 @@
         revenueChart = document.getElementById("revenue");
         operatingIncomeChart = document.getElementById("operating-income");
         netIncomeChart = document.getElementById("net-income");
+        cashChart = document.getElementById("cash");
+        totalAssetsChart = document.getElementById("total-assets");
+        longTermDebtChart = document.getElementById("long-term-debt");
         revenueData = [
             {
                 x:[
@@ -167,9 +178,57 @@
                 type: "bar",
             }
         ];
+        cashData = [
+            {
+                x: [
+                    {{ range .Dates }}
+                    {{ . }},
+                    {{ end  }}
+                ],
+                y: [
+                    {{ range .Cash }}
+                    parseInt({{ . }}),
+                    {{ end }}
+                ],
+                type: "bar",
+            }
+        ];
+        totalAssetsData = [
+            {
+                x: [
+                    {{ range .Dates }}
+                    {{ . }},
+                    {{ end  }}
+                ],
+                y: [
+                    {{ range .TotalAssets }}
+                    parseInt({{ . }}),
+                    {{ end }}
+                ],
+                type: "bar",
+            }
+        ];
+        longTermDebtData = [
+            {
+                x: [
+                    {{ range .Dates }}
+                    {{ . }},
+                    {{ end  }}
+                ],
+                y: [
+                    {{ range .LongTermDebt }}
+                    parseInt({{ . }}),
+                    {{ end }}
+                ],
+                type: "bar",
+            }
+        ];
         Plotly.newPlot(revenueChart, revenueData, { title: "Total Revenue" });
         Plotly.newPlot(operatingIncomeChart, operatingIncomeData, { title: "Operating Income" });
         Plotly.newPlot(netIncomeChart, netIncomeData, { title: "Net Income" });
+        Plotly.newPlot(cashChart, cashData, { title: "Total Cash" });
+        Plotly.newPlot(totalAssetsChart, totalAssetsData, { title: "Total Assets" });
+        Plotly.newPlot(longTermDebtChart, longTermDebtData, { title: "Long Term Debt" });
     </script>
 </body>
 </html>

@@ -64,6 +64,11 @@ func StockGet(c echo.Context) error {
 		return err
 	}
 
+	balanceSheet, err := api.GetBalanceSheet(symbol, apiKey)
+	if err != nil {
+		return err
+	}
+
 	marketCap, err := util.FormatCurrency(overview.MarketCapitalization)
 	if err != nil {
 		return err
@@ -89,20 +94,17 @@ func StockGet(c echo.Context) error {
 		return err
 	}
 
-	revenues, err := incomeStatements.GetTotalRevenues()
-	if err != nil {
-		return err
-	}
+	revenues := incomeStatements.GetTotalRevenues()
 
-	operatingIncomes, err := incomeStatements.GetOperatingIncomes()
-	if err != nil {
-		return err
-	}
+	operatingIncomes := incomeStatements.GetOperatingIncomes()
 
-	netIncomes, err := incomeStatements.GetNetIncomes()
-	if err != nil {
-		return err
-	}
+	netIncomes := incomeStatements.GetNetIncomes()
+
+	cash := balanceSheet.GetCash()
+
+	totalAssets := balanceSheet.GetTotalAssets()
+
+	longTermDebt := balanceSheet.GetLongTermDebt()
 
 	return c.Render(http.StatusOK, "stock.html", map[string]interface{}{
 		"Name":              overview.Name,
@@ -120,5 +122,8 @@ func StockGet(c echo.Context) error {
 		"Revenues":          revenues,
 		"OperatingIncomes":  operatingIncomes,
 		"NetIncomes":        netIncomes,
+		"Cash":              cash,
+		"TotalAssets":       totalAssets,
+		"LongTermDebt":      longTermDebt,
 	})
 }
