@@ -1,0 +1,15 @@
+[package]
+name = "algorithms"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+anyhow = { workspace = true }
+tokio = { workspace = true, features = ["net", "macros", "rt-multi-thread", "fs"] }
+serde = { version = "1.0.163", features = ["derive"] }
+axum = { workspace = true, features = ["ws"] }
+tracing-subscriber = { workspace = true }
+sysinfo = "0.29.2"
+serde_json = "1.0.97"
