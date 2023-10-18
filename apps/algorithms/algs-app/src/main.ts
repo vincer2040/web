@@ -1,2 +1,7 @@
+import QS from "./components/qs";
+import { render } from "solid-js/web";
 
-console.log("sup");
+const app = document.getElementById("app") as HTMLElement;
+
+render(() => QS(), app);
+
