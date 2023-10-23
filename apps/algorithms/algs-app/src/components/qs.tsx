@@ -4,11 +4,12 @@ import { getWsURL } from "../util/url";
 
 export default function QS() {
     let original: number[] = [];
+    const [data, setData] = createSignal<number[]>(original);
     let i: number;
     for (i = 0; i < 50; ++i) {
         original.push(randomInt(100));
     }
-    const [data, setData] = createSignal<number[]>(original);
+    setData(original);
     function sort() {
         const url = getWsURL("/qs");
         const socket = new WebSocket(url);
