@@ -46,7 +46,7 @@ undefined behavior on some architectures.
 
 Speaking of undefined behavior, another ambigous thing I had to
 do was check to make sure that the length or the capacity fields
-of the structure never overfloweds, as well as make sure that they
+of the structure never overflows, as well as make sure that they
 are alway smaller than `SIZE_MAX`. Take this function for example:
 
 ```c
