@@ -109,7 +109,7 @@
                     <div class="flex items-center justify-center">
                         <h3 class="text-lg">Income Statements</h3>
                     </div>
-                    <div class="flex justify-around">
+                    <div class="flex justify-around flex-col lg:flex-row">
                         <div id="revenue" style="width: 600px"></div>
                         <div id="operating-income" style="width: 600px"></div>
                         <div id="net-income" style="width: 600px"></div>
@@ -117,7 +117,7 @@
                     <div class="flex items-center justify-center">
                         <h3 class="text-lg">Balance Sheet</h3>
                     </div>
-                    <div class="flex justify-around">
+                    <div class="flex justify-around flex-col lg:flex-row">
                         <div id="cash" style="width: 600px"></div>
                         <div id="total-assets" style="width: 600px"></div>
                         <div id="long-term-debt" style="width: 600px"></div>
@@ -223,12 +223,12 @@
                 type: "bar",
             }
         ];
-        Plotly.newPlot(revenueChart, revenueData, { title: "Total Revenue" });
-        Plotly.newPlot(operatingIncomeChart, operatingIncomeData, { title: "Operating Income" });
-        Plotly.newPlot(netIncomeChart, netIncomeData, { title: "Net Income" });
-        Plotly.newPlot(cashChart, cashData, { title: "Total Cash" });
-        Plotly.newPlot(totalAssetsChart, totalAssetsData, { title: "Total Assets" });
-        Plotly.newPlot(longTermDebtChart, longTermDebtData, { title: "Long Term Debt" });
+        Plotly.newPlot(revenueChart, revenueData, { title: "Total Revenue" }, { responsive: true });
+        Plotly.newPlot(operatingIncomeChart, operatingIncomeData, { title: "Operating Income" }, { responsive: true });
+        Plotly.newPlot(netIncomeChart, netIncomeData, { title: "Net Income" }, { responsive: true });
+        Plotly.newPlot(cashChart, cashData, { title: "Total Cash" }, { responsive: true });
+        Plotly.newPlot(totalAssetsChart, totalAssetsData, { title: "Total Assets" }, { responsive: true });
+        Plotly.newPlot(longTermDebtChart, longTermDebtData, { title: "Long Term Debt" }, { responsive: true });
     </script>
 </body>
 </html>
