@@ -85,7 +85,7 @@ the `needed_len` is less than the `initial_cap`, which seems impossible
 as we have just added the `initial_cap` to the size of a `vstring` to
 compute `needed_len`, but, if the initial capacity is large enough,
 it would cause the `needed_len` to overflow. I know that overflowing
-signed integers is defined by the standard, but overflowing on signed integers
+unsigned integers is defined by the standard, but overflowing on signed integers
 is undefined behavior. The reason I worried about this was due to this
 scary example:
 
