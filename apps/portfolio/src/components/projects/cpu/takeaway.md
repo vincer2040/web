@@ -1,4 +1,4 @@
-### Overview
+### Takeaway
 
 This project taught me a lot about bridging asynchronous programming
 with synchronous programming as well as sharing data across multiple
