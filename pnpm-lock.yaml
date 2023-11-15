@@ -37,6 +37,12 @@ importers:
         specifier: ^2.7.2
         version: 2.7.2(solid-js@1.8.3)(vite@4.4.9)
 
+  apps/chess:
+    devDependencies:
+      tailwindcss:
+        specifier: ^3.3.2
+        version: 3.3.2
+
   apps/cpus/cpus-app:
     dependencies:
       observable:
